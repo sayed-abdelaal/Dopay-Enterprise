@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DoPay Enterprise — Home</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .hub-shell {
+      min-height: 100vh;
+      background: var(--gradient-landing);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px var(--space-lg);
+      gap: var(--space-3xl);
+    }
+
+    .hub-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-lg);
+      text-align: center;
+    }
+
+    .hub-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .hub-logo__text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-ink);
+      letter-spacing: -0.02em;
+    }
+
+    .hub-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 400;
+      color: var(--color-ink);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .hub-subtitle {
+      font-size: 15px;
+      color: var(--color-muted-text);
+      max-width: 400px;
+      line-height: 1.6;
+    }
+
+    .hub-nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .hub-nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: 20px var(--space-2xl);
+      background: var(--color-surface);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition-standard);
+      position: relative;
+    }
+
+    .hub-nav-item:hover {
+      border-color: var(--color-primary-border);
+      box-shadow: var(--shadow-landing-card);
+      transform: translateY(-1px);
+    }
+
+    .hub-nav-item:focus-visible {
+      outline: 0;
+      box-shadow: var(--shadow-focus);
+    }
+
+    .hub-nav-item__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .hub-nav-item__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hub-nav-item__title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-ink);
+      margin-bottom: 2px;
+    }
+
+    .hub-nav-item__desc {
+      font-size: 13px;
+      color: var(--color-muted-text);
+      line-height: 1.4;
+    }
+
+    .hub-nav-item__arrow {
+      color: var(--color-placeholder);
+      font-size: 18px;
+      flex-shrink: 0;
+      transition: var(--transition-standard);
+    }
+
+    .hub-nav-item:hover .hub-nav-item__arrow {
+      color: var(--color-primary);
+      transform: translateX(2px);
+    }
+
+    .hub-footer {
+      font-size: 12px;
+      color: var(--color-placeholder);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hub-shell">
+
+    <div class="hub-header">
+      <div class="hub-logo">
+        <svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#6e37cc"/>
+          <path d="M10 10h7a5 5 0 0 1 0 10h-3v4h-4V10zm4 3v4h3a2 2 0 1 0 0-4h-3z" fill="#ffffff"/>
+        </svg>
+        <span class="hub-logo__text">DoPay</span>
+      </div>
+      <span class="landing-eyebrow">Enterprise Suite</span>
+      <h1 class="hub-title">Where do you want<br>to go?</h1>
+      <p class="hub-subtitle">Select a destination to get started.</p>
+    </div>
+
+    <nav class="hub-nav" aria-label="Main navigation">
+
+      <a href="companies.html" class="hub-nav-item">
+        <div class="hub-nav-item__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="2" y="5" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M6 5V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M2 10h16" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"/>
+          </svg>
+        </div>
+        <div class="hub-nav-item__body">
+          <p class="hub-nav-item__title">Enter Enterprise Portal</p>
+          <p class="hub-nav-item__desc">Manage companies, beneficiaries, payments and more.</p>
+        </div>
+        <span class="hub-nav-item__arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a href="#" class="hub-nav-item">
+        <div class="hub-nav-item__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="hub-nav-item__body">
+          <p class="hub-nav-item__title">Design Guidelines</p>
+          <p class="hub-nav-item__desc">Visual language, components, and usage patterns.</p>
+        </div>
+        <span class="hub-nav-item__arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a href="settings/ewa.html" class="hub-nav-item">
+        <div class="hub-nav-item__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.1 4.1l1.4 1.4M14.5 14.5l1.4 1.4M4.1 15.9l1.4-1.4M14.5 5.5l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="hub-nav-item__body">
+          <p class="hub-nav-item__title">Platform Settings</p>
+          <p class="hub-nav-item__desc">Global defaults for EWA and other products.</p>
+        </div>
+        <span class="hub-nav-item__arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a href="portal.html" class="hub-nav-item">
+        <div class="hub-nav-item__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M3 10a7 7 0 1 0 14 0A7 7 0 0 0 3 10z" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M10 7v3l2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15.5 4.5l1.5-1.5M4.5 4.5L3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="hub-nav-item__body">
+          <p class="hub-nav-item__title">Experimentations</p>
+          <p class="hub-nav-item__desc">EWA configuration sandbox and feature testing.</p>
+        </div>
+        <span class="hub-nav-item__arrow" aria-hidden="true">›</span>
+      </a>
+
+    </nav>
+
+    <p class="hub-footer">DoPay Enterprise Suite &middot; v1.0</p>
+
+  </div>
+
+</body>
+</html>

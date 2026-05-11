@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Companies — DoPay Enterprise Portal</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="bo-shell">
+
+  <!-- TOPBAR -->
+  <header class="bo-topbar" role="banner">
+    <div class="bo-topbar__brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="#6e37cc"/>
+          <path d="M10 10h7a5 5 0 0 1 0 10h-3v4h-4V10zm4 3v4h3a2 2 0 1 0 0-4h-3z" fill="#ffffff"/>
+        </svg>
+        <span class="bo-topbar__logo-text">DoPay</span>
+      </a>
+      <span class="bo-topbar__sep" aria-hidden="true"></span>
+      <nav class="bo-topbar__nav" aria-label="Main navigation">
+        <a href="companies.html" class="bo-topbar__nav-link is-active">Companies</a>
+        <a href="settings/ewa.html" class="bo-topbar__nav-link">Settings</a>
+      </nav>
+    </div>
+    <div class="bo-topbar__right">
+      <span class="bo-topbar__env-pill">Enterprise</span>
+      <div class="bo-topbar__user" role="button" tabindex="0" aria-label="User menu">
+        <div class="bo-topbar__avatar" aria-hidden="true">SA</div>
+        <span class="bo-topbar__username">Sayed A.</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SUB-HEADER -->
+  <div class="bo-header">
+    <div class="bo-header__inner">
+      <div class="bo-header__top">
+        <nav class="bo-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html" class="bo-breadcrumb__item">Home</a>
+          <span class="bo-breadcrumb__sep" aria-hidden="true">›</span>
+          <span class="bo-breadcrumb__item bo-breadcrumb__item--active" aria-current="page">Companies</span>
+        </nav>
+        <button class="btn btn-primary btn-sm">+ Add Company</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="bo-main">
+
+    <!-- Stats strip -->
+    <div class="ewa-stats-strip" style="margin-bottom: var(--space-2xl);">
+      <div class="stat-card">
+        <p class="stat-card__label">Total Companies</p>
+        <p class="stat-card__value num">48</p>
+        <p class="stat-card__sub">All time</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card__label">Active</p>
+        <p class="stat-card__value num">41</p>
+        <p class="stat-card__sub">Currently live</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card__label">Total Beneficiaries</p>
+        <p class="stat-card__value num">18,430</p>
+        <p class="stat-card__sub">Across all companies</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card__label">Disbursed (MTD)</p>
+        <p class="stat-card__value num">EGP 4.2M</p>
+        <p class="stat-card__sub">May 2026</p>
+      </div>
+    </div>
+
+    <div class="ewa-card">
+
+      <!-- Toolbar -->
+      <div class="ewa-toolbar">
+        <div class="ewa-toolbar__left">
+          <div class="ewa-search" role="search">
+            <svg class="ewa-search__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <input class="ewa-search__input" type="search" placeholder="Search companies…" aria-label="Search companies">
+          </div>
+          <div class="ewa-select-wrap">
+            <select class="ewa-select ewa-select--sm" aria-label="Filter by status">
+              <option value="">All statuses</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+          <div class="ewa-select-wrap">
+            <select class="ewa-select ewa-select--sm" aria-label="Filter by country">
+              <option value="">All countries</option>
+              <option value="eg">Egypt</option>
+              <option value="sa">Saudi Arabia</option>
+              <option value="ae">UAE</option>
+            </select>
+          </div>
+        </div>
+        <div class="ewa-toolbar__right">
+          <button class="btn btn-ghost btn-sm">Export</button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="ewa-table-wrap">
+        <table class="ewa-table" aria-label="Companies list">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Status</th>
+              <th>Country</th>
+              <th>Beneficiaries</th>
+              <th>Active EWA</th>
+              <th>Disbursed (MTD)</th>
+              <th>Joined</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="cursor:pointer;" onclick="window.location='company/info.html'">
+              <td>
+                <div class="ewa-name-cell">
+                  <div class="ewa-avatar" aria-hidden="true">AC</div>
+                  <div>
+                    <p class="ewa-name-cell__primary">Acme Corp</p>
+                    <p class="ewa-name-cell__secondary num">COMP-0001</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-teal">Active</span></td>
+              <td>Egypt</td>
+              <td class="num">1,284</td>
+              <td class="num">947</td>
+              <td class="num">EGP 527K</td>
+              <td style="color:var(--color-muted-text);font-size:13px;">Jan 12, 2024</td>
+              <td><a href="company/info.html" class="ewa-table-action">View</a></td>
+            </tr>
+            <tr style="cursor:pointer;" onclick="window.location='company/info.html'">
+              <td>
+                <div class="ewa-name-cell">
+                  <div class="ewa-avatar" style="background:#ddf0ff;color:#0060a8;" aria-hidden="true">TS</div>
+                  <div>
+                    <p class="ewa-name-cell__primary">TechStar Holdings</p>
+                    <p class="ewa-name-cell__secondary num">COMP-0002</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-teal">Active</span></td>
+              <td>Saudi Arabia</td>
+              <td class="num">3,610</td>
+              <td class="num">2,140</td>
+              <td class="num">EGP 1.1M</td>
+              <td style="color:var(--color-muted-text);font-size:13px;">Mar 5, 2024</td>
+              <td><a href="company/info.html" class="ewa-table-action">View</a></td>
+            </tr>
+            <tr style="cursor:pointer;" onclick="window.location='company/info.html'">
+              <td>
+                <div class="ewa-name-cell">
+                  <div class="ewa-avatar" style="background:#d4f7e8;color:#006b3c;" aria-hidden="true">NI</div>
+                  <div>
+                    <p class="ewa-name-cell__primary">Nile Industries</p>
+                    <p class="ewa-name-cell__secondary num">COMP-0003</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-teal">Active</span></td>
+              <td>Egypt</td>
+              <td class="num">890</td>
+              <td class="num">554</td>
+              <td class="num">EGP 310K</td>
+              <td style="color:var(--color-muted-text);font-size:13px;">Apr 18, 2024</td>
+              <td><a href="company/info.html" class="ewa-table-action">View</a></td>
+            </tr>
+            <tr style="cursor:pointer;" onclick="window.location='company/info.html'">
+              <td>
+                <div class="ewa-name-cell">
+                  <div class="ewa-avatar" style="background:#fff3d4;color:#8a5a00;" aria-hidden="true">DG</div>
+                  <div>
+                    <p class="ewa-name-cell__primary">Delta Group</p>
+                    <p class="ewa-name-cell__secondary num">COMP-0004</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-neutral">Inactive</span></td>
+              <td>UAE</td>
+              <td class="num">420</td>
+              <td class="num">0</td>
+              <td class="num">—</td>
+              <td style="color:var(--color-muted-text);font-size:13px;">Jun 2, 2024</td>
+              <td><a href="company/info.html" class="ewa-table-action">View</a></td>
+            </tr>
+            <tr style="cursor:pointer;" onclick="window.location='company/info.html'">
+              <td>
+                <div class="ewa-name-cell">
+                  <div class="ewa-avatar" style="background:#fde8f0;color:#8b003a;" aria-hidden="true">PH</div>
+                  <div>
+                    <p class="ewa-name-cell__primary">Pharos Healthcare</p>
+                    <p class="ewa-name-cell__secondary num">COMP-0005</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-purple" style="background:rgba(255,170,0,0.12);color:#a06b00;">Pending</span></td>
+              <td>Egypt</td>
+              <td class="num">—</td>
+              <td class="num">—</td>
+              <td class="num">—</td>
+              <td style="color:var(--color-muted-text);font-size:13px;">May 1, 2026</td>
+              <td><a href="company/info.html" class="ewa-table-action">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Table footer -->
+      <div class="ewa-table-footer">
+        <p class="ewa-table-footer__count">Showing 5 of 48 companies</p>
+        <nav class="ewa-pagination" aria-label="Table pagination" data-pagination>
+          <button class="ewa-pagination__arrow ewa-pagination__prev" aria-label="Previous page" disabled>‹</button>
+          <button class="ewa-pagination__page is-active">1</button>
+          <button class="ewa-pagination__page">2</button>
+          <button class="ewa-pagination__page">3</button>
+          <span style="padding:0 4px;color:var(--color-muted-text);font-size:13px;">…</span>
+          <button class="ewa-pagination__page">10</button>
+          <button class="ewa-pagination__arrow ewa-pagination__next" aria-label="Next page">›</button>
+        </nav>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="js/tabs.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>

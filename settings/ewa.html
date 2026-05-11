@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EWA — Platform Settings — DoPay Enterprise Portal</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    /* ── Settings page — component extensions ───────────────
+       All values reference CSS tokens from tokens.css.
+    ──────────────────────────────────────────────────────── */
+
+    /* Panel heading */
+    .v6-panel-heading {
+      margin-bottom: var(--space-xl);
+    }
+    .v6-panel-heading h2 {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--color-ink);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-xs);
+    }
+    .v6-panel-heading p {
+      font-size: 14px;
+      color: var(--color-muted-text);
+    }
+
+    /* Inline toggle + label */
+    .v6-toggle-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding-top: 8px;
+    }
+    .v6-toggle-row__text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-ink);
+    }
+
+    /* Input + suffix */
+    .ewa-suffix-wrap {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--color-input-border);
+      border-radius: var(--radius-input);
+      overflow: hidden;
+      background: var(--color-surface);
+      transition: var(--transition-standard);
+    }
+    .ewa-suffix-wrap:focus-within {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-focus);
+    }
+    .ewa-suffix-wrap .ewa-input {
+      border: none;
+      border-radius: 0;
+      box-shadow: none !important;
+      flex: 1;
+      min-width: 0;
+    }
+    .ewa-suffix-wrap .ewa-input:focus {
+      box-shadow: none !important;
+    }
+    .ewa-input-suffix {
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-muted-text);
+      background: var(--color-subtle-bg);
+      border-left: 1px solid var(--color-divider);
+      white-space: nowrap;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    /* Hybrid rate pair: mode select + suffixed input */
+    .v6-rate-pair {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: stretch;
+    }
+    .v6-rate-pair .ewa-select-wrap {
+      flex: 0 0 140px;
+    }
+    .v6-rate-pair .ewa-suffix-wrap {
+      flex: 1;
+    }
+
+    /* Disabled field feedback */
+    [data-v6-fee-dep][data-disabled="true"] {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* Offset scroll targets below the two sticky headers
+       bo-topbar (~52px) + bo-header (~90px) + 16px breathing room */
+    .ewa-section[id] {
+      scroll-margin-top: 158px;
+    }
+
+    /* Extra bottom space so the last section can also reach
+       the 158px target — without this, Cycle hits page-end early */
+    .bo-main {
+      padding-bottom: calc(var(--space-page-bottom) + 320px);
+    }
+
+    /* Info notice */
+    .v6-info-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-primary-light);
+      border: 1px solid var(--color-primary-border);
+      border-radius: var(--radius-button);
+      font-size: 13px;
+      color: var(--color-deep-purple);
+      line-height: 1.5;
+      margin-bottom: var(--space-xl);
+    }
+    .v6-info-notice svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+
+<div class="bo-shell">
+
+  <!-- ══ TOPBAR ════════════════════════════════════════════ -->
+  <header class="bo-topbar" role="banner">
+    <div class="bo-topbar__brand">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="#6e37cc"/>
+          <path d="M10 10h7a5 5 0 0 1 0 10h-3v4h-4V10zm4 3v4h3a2 2 0 1 0 0-4h-3z" fill="#ffffff"/>
+        </svg>
+        <span class="bo-topbar__logo-text">DoPay</span>
+      </a>
+      <span class="bo-topbar__sep" aria-hidden="true"></span>
+      <nav class="bo-topbar__nav" aria-label="Main navigation">
+        <a href="../companies.html" class="bo-topbar__nav-link">Companies</a>
+        <a href="ewa.html" class="bo-topbar__nav-link is-active">Settings</a>
+      </nav>
+    </div>
+    <div class="bo-topbar__right">
+      <span class="bo-topbar__env-pill">Enterprise</span>
+      <div class="bo-topbar__user" role="button" tabindex="0" aria-label="User menu">
+        <div class="bo-topbar__avatar" aria-hidden="true">SA</div>
+        <span class="bo-topbar__username">Sayed A.</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ SUB-HEADER ════════════════════════════════════════ -->
+  <div class="bo-header">
+    <div class="bo-header__inner">
+      <div class="bo-header__top">
+        <nav class="bo-breadcrumb" aria-label="Breadcrumb">
+          <a href="../index.html" class="bo-breadcrumb__item">Home</a>
+          <span class="bo-breadcrumb__sep" aria-hidden="true">›</span>
+          <span class="bo-breadcrumb__item">Settings</span>
+          <span class="bo-breadcrumb__sep" aria-hidden="true">›</span>
+          <span class="bo-breadcrumb__item bo-breadcrumb__item--active" aria-current="page">EWA</span>
+        </nav>
+      </div>
+      <nav class="bo-tabs scroll-hidden" aria-label="Settings sections">
+        <a href="ewa.html" class="bo-tab is-active">EWA</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ══ MAIN ══════════════════════════════════════════════ -->
+  <main class="bo-main">
+    <div class="ewa-split-layout">
+
+      <!-- ── Sidebar nav (section shortcuts) ───────────── -->
+      <nav class="ewa-split-nav" aria-label="EWA settings sections">
+
+        <button class="ewa-split-nav__btn is-active" type="button" data-v6-section="core" aria-selected="true">
+          <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          Core
+        </button>
+
+        <button class="ewa-split-nav__btn" type="button" data-v6-section="fees" aria-selected="false">
+          <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M5.5 10.5c.4.6 1.2 1 2.5 1s2.5-.7 2.5-2c0-2.5-5-1.5-5-4 0-1.3 1-2 2.5-2s2.1.4 2.5 1M8 3.5v1M8 11.5v1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          Fees
+        </button>
+
+        <button class="ewa-split-nav__btn" type="button" data-v6-section="limits" aria-selected="false">
+          <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 4h12M2 8h8M2 12h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M12 10v4M10 12l2-2 2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Limits
+        </button>
+
+        <button class="ewa-split-nav__btn" type="button" data-v6-section="cycle" aria-selected="false">
+          <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <rect x="1.5" y="3" width="13" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M5 1.5V4M11 1.5V4M1.5 7h13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          Cycle
+        </button>
+
+      </nav>
+
+      <!-- ── Right: settings panel ──────────────────────── -->
+      <div>
+
+        <!-- Unsaved changes bar -->
+        <div class="ewa-unsaved-bar" data-v6-unsaved hidden>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 5v3.5M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          You have unsaved changes
+        </div>
+
+        <!-- Heading -->
+        <div class="v6-panel-heading">
+          <h2>EWA Platform Defaults</h2>
+          <p>These values apply to all companies unless individually overridden.</p>
+        </div>
+
+        <!-- Settings card -->
+        <div class="ewa-card">
+
+          <!-- ── Core ─────────────────────────────────────── -->
+          <div class="ewa-section" id="core">
+            <p class="ewa-section__label">Core</p>
+            <h3 class="ewa-section__title">Earned Wage Access</h3>
+            <p class="ewa-section__desc">Configure the default approval flow for all EWA requests across the platform.</p>
+
+            <div class="ewa-field">
+              <div class="ewa-field__label-group">
+                <p class="ewa-field__label">Require pre-approval</p>
+                <p class="ewa-field__help">If on, every request must be approved by a DoPay admin before funds are released.</p>
+              </div>
+              <div class="v6-toggle-row">
+                <label class="ewa-toggle is-on" aria-label="Require pre-approval">
+                  <input class="ewa-toggle__input" type="checkbox" data-v6-ctrl="preapproval" checked>
+                  <span class="ewa-toggle__track"></span>
+                </label>
+                <span class="v6-toggle-row__text" data-v6-state="preapproval">Required</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Fees ──────────────────────────────────────── -->
+          <div class="ewa-section" id="fees">
+            <p class="ewa-section__label">Fees</p>
+            <h3 class="ewa-section__title">Fee configuration</h3>
+            <p class="ewa-section__desc">Set the default fee structure applied across all companies. Each company can override these individually.</p>
+
+            <!-- Apply a fee -->
+            <div class="ewa-field">
+              <div class="ewa-field__label-group">
+                <p class="ewa-field__label">Apply a fee</p>
+                <p class="ewa-field__help">If off, no fee is charged on EWA requests by default.</p>
+              </div>
+              <div class="v6-toggle-row">
+                <label class="ewa-toggle is-on" aria-label="Apply a fee">
+                  <input class="ewa-toggle__input" type="checkbox" data-v6-ctrl="feeEnabled" checked>
+                  <span class="ewa-toggle__track"></span>
+                </label>
+                <span class="v6-toggle-row__text" data-v6-state="feeEnabled">Charging fee</span>
+              </div>
+            </div>
+
+            <!-- Who pays -->
+            <div class="ewa-field" data-v6-fee-dep data-disabled="false">
+              <div class="ewa-field__label-group">
+                <p class="ewa-field__label">Who pays the fee?</p>
+                <p class="ewa-field__help">Whether the fee is deducted from the employee's request or billed to the company.</p>
+              </div>
+              <div class="ewa-select-wrap">
+                <select class="ewa-select" data-v6-field="feeMode">
+                  <option value="company">Company pays — added to invoice</option>
+                  <option value="employee">Employee pays — deducted from request</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Default rate (direct input — this IS the default) -->
+            <div class="ewa-field" data-v6-fee-dep data-disabled="false">
+              <div class="ewa-field__label-group">
+                <p class="ewa-field__label">Default rate</p>
+                <p class="ewa-field__help">The platform-wide fee rate. Companies can override this with a custom rate.</p>
+              </div>
+              <div class="v6-rate-pair">
+                <div class="ewa-select-wrap">
+                  <select class="ewa-select" data-v6-rate-mode>
+                    <option value="percent">Percentage</option>
+                    <option value="fixed">Fixed amount</option>
+                  </select>
+                </div>
+                <div class="ewa-suffix-wrap">
+                  <input class="ewa-input" type="number" step="0.01" min="0" max="100" value="2.50" data-v6-field="customRate">
+                  <span class="ewa-input-suffix" data-v6-rate-suffix>%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- VAT -->
+            <div class="ewa-field" data-v6-fee-dep data-disabled="false">
+              <div class="ewa-field__label-group">
+                <p class="ewa-field__label">VAT</p>
+                <p class="ewa-field__help">Tax applied on top of the fee. Egypt's standard rate is 14%.</p>
+              </div>
+              <div class="ewa-suffix-wrap" style="max-width:140px;">
+                <input class="ewa-input" type="number" step="1" min="0" max="100" value="14" data-v6-field="vat">
+                <span class="ewa-input-suffix">%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Limits ─────────────────────────────────────── -->
+          <div class="ewa-section" id="limits">
+            <p class="ewa-section__label">Limits</p>
+            <h3 class="ewa-section__title">Financial limits</h3>
+            <p class="ewa-section__desc">Define the default financial caps applied to all companies. Companies can override each limit individually.</p>
+
+            <!-- Maximum cap -->
+            <div class="ewa-field">
+              <div class="ewa-field__label-group">
+                <p class="ewa-field__label">Maximum cap</p>
+                <p class="ewa-field__help">The highest amount an employee can request in a single cycle.</p>
+              </div>
+              <div class="v6-rate-pair">
+                <div class="ewa-select-wrap">
+                  <select class="ewa-select" data-v6-cap-mode>
+                    <option value="percent">Percentage</option>
+                    <option value="fixed">Fixed amount</option>
+                  </select>
+                </div>
+                <div class="ewa-suffix-wrap">
+                  <input class="ewa-input" type="number" step="1" min="0" max="100" value="50" data-v6-field="maxCap">
+                  <span class="ewa-input-suffix" data-v6-cap-suffix>%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Minimum request -->
+            <div class="ewa-field">
+              <div class="ewa-field__label-group">
+                <p class="ewa-field__label">Minimum request amount</p>
+                <p class="ewa-field__help">Below this amount, employees won't be able to submit a request.</p>
+              </div>
+              <div class="ewa-suffix-wrap" style="max-width:200px;">
+                <input class="ewa-input" type="number" step="50" min="0" value="500" data-v6-field="minRequest">
+                <span class="ewa-input-suffix">EGP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Cycle ──────────────────────────────────────── -->
+          <div class="ewa-section" id="cycle">
+            <p class="ewa-section__label">Cycle</p>
+            <h3 class="ewa-section__title">Payroll cycle &amp; timing</h3>
+            <p class="ewa-section__desc">Set the default payroll calendar used across all companies. Companies running a different schedule can override these values.</p>
+
+            <!-- Payroll start date -->
+            <div class="ewa-field">
+              <div class="ewa-field__label-group">
+                <p class="ewa-field__label">Payroll start date</p>
+                <p class="ewa-field__help">Day of the month when the next payroll cycle begins.</p>
+              </div>
+              <div class="ewa-select-wrap">
+                <select class="ewa-select" data-v6-field="payrollStart"></select>
+              </div>
+            </div>
+
+            <!-- Last day to accept requests -->
+            <div class="ewa-field">
+              <div class="ewa-field__label-group">
+                <p class="ewa-field__label">Last day to accept requests</p>
+                <p class="ewa-field__help">Cutoff after which no new EWA requests are accepted in the current cycle.</p>
+              </div>
+              <div class="ewa-select-wrap">
+                <select class="ewa-select" data-v6-field="lastDay"></select>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /ewa-card -->
+
+        <!-- Action row -->
+        <div class="ewa-action-row" data-v6-actions hidden>
+          <button class="btn btn-ghost" type="button" data-v6-discard>Discard changes</button>
+          <button class="btn btn-primary" type="button" data-v6-save>Save settings</button>
+        </div>
+
+      </div><!-- /right -->
+    </div><!-- /ewa-split-layout -->
+  </main>
+
+</div><!-- /bo-shell -->
+
+
+<script src="../js/toggle.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── Helpers ──────────────────────────────────────────── */
+
+  function qs(sel, ctx)  { return (ctx || document).querySelector(sel); }
+  function qsa(sel, ctx) { return Array.from((ctx || document).querySelectorAll(sel)); }
+
+  function dayLabel(n) {
+    n = Number(n);
+    var s = ['th', 'st', 'nd', 'rd'];
+    var v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]) + ' of the month';
+  }
+
+  function populateDaySelect(sel, defaultVal) {
+    sel.innerHTML = Array.from({ length: 31 }, function (_, i) {
+      var d = i + 1;
+      return '<option value="' + d + '">' + dayLabel(d) + '</option>';
+    }).join('');
+    sel.value = String(defaultVal);
+  }
+
+  /* ── Section nav ──────────────────────────────────────── */
+
+  var sectionBtns = qsa('[data-v6-section]');
+
+  sectionBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      sectionBtns.forEach(function (b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+      var target = document.getElementById(btn.dataset.v6Section);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* ── Toggle helpers ───────────────────────────────────── */
+
+  function syncToggleWrapper(checkbox) {
+    var wrapper = checkbox.closest('.ewa-toggle');
+    if (wrapper) wrapper.classList.toggle('is-on', checkbox.checked);
+  }
+
+  /* ── Setting toggles ─────────────────────────────────── */
+
+  var preapprovalCb    = qs('[data-v6-ctrl="preapproval"]');
+  var feeEnabledCb     = qs('[data-v6-ctrl="feeEnabled"]');
+  var preapprovalState = qs('[data-v6-state="preapproval"]');
+  var feeEnabledState  = qs('[data-v6-state="feeEnabled"]');
+  var feeDeps          = qsa('[data-v6-fee-dep]');
+
+  function syncPreapproval() {
+    syncToggleWrapper(preapprovalCb);
+    preapprovalState.textContent = preapprovalCb.checked ? 'Required' : 'Not required';
+    syncDirty();
+  }
+
+  function syncFeeEnabled() {
+    syncToggleWrapper(feeEnabledCb);
+    feeEnabledState.textContent = feeEnabledCb.checked ? 'Charging fee' : 'No fee';
+    var disabled = !feeEnabledCb.checked;
+    feeDeps.forEach(function (el) { el.dataset.disabled = disabled ? 'true' : 'false'; });
+    syncDirty();
+  }
+
+  preapprovalCb.addEventListener('change', syncPreapproval);
+  feeEnabledCb.addEventListener('change', syncFeeEnabled);
+
+  /* ── Hybrid rate mode (default rate) ─────────────────── */
+
+  var rateModeSelect = qs('[data-v6-rate-mode]');
+
+  function syncRateSuffix() {
+    if (!rateModeSelect) return;
+    var suffix    = qs('[data-v6-rate-suffix]');
+    var rateField = qs('[data-v6-field="customRate"]');
+    if (suffix) suffix.textContent = rateModeSelect.value === 'fixed' ? 'EGP' : '%';
+    if (rateField) {
+      if (rateModeSelect.value === 'fixed') {
+        rateField.setAttribute('step', '0.01');
+        rateField.removeAttribute('max');
+      } else {
+        rateField.setAttribute('step', '0.01');
+        rateField.setAttribute('max', '100');
+      }
+    }
+  }
+
+  if (rateModeSelect) {
+    rateModeSelect.addEventListener('change', function () { syncRateSuffix(); syncDirty(); });
+  }
+
+  /* ── Hybrid cap mode (maximum cap) ───────────────────── */
+
+  var capModeSelect = qs('[data-v6-cap-mode]');
+
+  function syncCapSuffix() {
+    if (!capModeSelect) return;
+    var suffix   = qs('[data-v6-cap-suffix]');
+    var capField = qs('[data-v6-field="maxCap"]');
+    if (suffix) suffix.textContent = capModeSelect.value === 'fixed' ? 'EGP' : '%';
+    if (capField) {
+      if (capModeSelect.value === 'fixed') {
+        capField.setAttribute('step', '100');
+        capField.removeAttribute('max');
+      } else {
+        capField.setAttribute('step', '1');
+        capField.setAttribute('max', '100');
+      }
+    }
+  }
+
+  if (capModeSelect) {
+    capModeSelect.addEventListener('change', function () { syncCapSuffix(); syncDirty(); });
+  }
+
+  /* ── Dirty state tracking ─────────────────────────────── */
+
+  var unsavedBar   = qs('[data-v6-unsaved]');
+  var actionsRow   = qs('[data-v6-actions]');
+  var committedState = null;
+
+  function currentState() {
+    return {
+      preapproval:  preapprovalCb.checked,
+      feeEnabled:   feeEnabledCb.checked,
+      feeMode:      qs('[data-v6-field="feeMode"]').value,
+      customRate:   qs('[data-v6-field="customRate"]').value,
+      rateMode:     rateModeSelect ? rateModeSelect.value : 'percent',
+      capMode:      capModeSelect  ? capModeSelect.value  : 'percent',
+      vat:          qs('[data-v6-field="vat"]').value,
+      maxCap:       qs('[data-v6-field="maxCap"]').value,
+      minRequest:   qs('[data-v6-field="minRequest"]').value,
+      payrollStart: qs('[data-v6-field="payrollStart"]').value,
+      lastDay:      qs('[data-v6-field="lastDay"]').value,
+    };
+  }
+
+  function syncDirty() {
+    if (!committedState) return;
+    var dirty = JSON.stringify(currentState()) !== JSON.stringify(committedState);
+    unsavedBar.hidden = !dirty;
+    actionsRow.hidden = !dirty;
+  }
+
+  function commitState() {
+    committedState = JSON.parse(JSON.stringify(currentState()));
+    unsavedBar.hidden = true;
+    actionsRow.hidden = true;
+  }
+
+  /* ── Track all field changes ──────────────────────────── */
+
+  qsa('[data-v6-field]').forEach(function (field) {
+    field.addEventListener('input',  syncDirty);
+    field.addEventListener('change', syncDirty);
+  });
+
+  /* ── Save ─────────────────────────────────────────────── */
+
+  qs('[data-v6-save]').addEventListener('click', commitState);
+
+  /* ── Discard ──────────────────────────────────────────── */
+
+  qs('[data-v6-discard]').addEventListener('click', function () {
+    if (!committedState) return;
+    preapprovalCb.checked = committedState.preapproval;
+    feeEnabledCb.checked  = committedState.feeEnabled;
+    qs('[data-v6-field="feeMode"]').value      = committedState.feeMode;
+    qs('[data-v6-field="customRate"]').value   = committedState.customRate;
+    qs('[data-v6-field="vat"]').value          = committedState.vat;
+    qs('[data-v6-field="maxCap"]').value       = committedState.maxCap;
+    qs('[data-v6-field="minRequest"]').value   = committedState.minRequest;
+    qs('[data-v6-field="payrollStart"]').value = committedState.payrollStart;
+    qs('[data-v6-field="lastDay"]').value      = committedState.lastDay;
+    if (rateModeSelect) rateModeSelect.value = committedState.rateMode;
+    if (capModeSelect)  capModeSelect.value  = committedState.capMode;
+    syncRateSuffix();
+    syncCapSuffix();
+    syncPreapproval();
+    syncFeeEnabled();
+    unsavedBar.hidden = true;
+    actionsRow.hidden = true;
+  });
+
+  /* ── Init ─────────────────────────────────────────────── */
+
+  populateDaySelect(qs('[data-v6-field="payrollStart"]'), 1);
+  populateDaySelect(qs('[data-v6-field="lastDay"]'), 25);
+  syncRateSuffix();
+  syncCapSuffix();
+  commitState();
+
+}());
+</script>
+</body>
+</html>

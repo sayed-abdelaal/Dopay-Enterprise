@@ -1,0 +1,173 @@
+/* ============================================================
+   DoPay Enterprise Portal — Responsive Breakpoints
+   From design.md §11
+   ============================================================ */
+
+/* ── ≤ 1100px ─────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .bo-topbar {
+    padding: 10px var(--space-2xl);
+  }
+
+  .bo-header__inner {
+    padding: 0 var(--space-2xl);
+  }
+
+  .bo-main {
+    padding: var(--space-3xl) var(--space-2xl) var(--space-page-bottom);
+  }
+}
+
+/* ── ≤ 900px ──────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+
+  /* Split layout collapses to single column */
+  .ewa-split-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Sticky nav becomes static */
+  .ewa-split-nav {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .ewa-split-nav__label {
+    width: 100%;
+  }
+
+  /* Toolbars stack */
+  .ewa-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ewa-toolbar__left,
+  .ewa-toolbar__right {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .ewa-search {
+    width: 100%;
+  }
+
+  .ewa-search__input {
+    width: 100%;
+  }
+
+  /* Form fields collapse */
+  .ewa-field {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  /* Input pairs collapse */
+  .ewa-input-pair {
+    grid-template-columns: 1fr;
+  }
+
+  /* 2-col grid collapses */
+  .ewa-v2-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stats strip collapses */
+  .ewa-stats-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Page padding reduces */
+  .bo-topbar {
+    padding: 10px var(--space-lg);
+  }
+
+  .bo-header__inner {
+    padding: 0 var(--space-lg);
+  }
+
+  .bo-main {
+    padding: var(--space-2xl) var(--space-lg) var(--space-page-bottom);
+  }
+
+  /* Section padding reduces */
+  .ewa-section {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .ewa-card__header {
+    padding: var(--space-lg);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Action row stacks */
+  .ewa-action-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-lg);
+  }
+
+  .ewa-action-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Landing card padding reduces */
+  .landing-card {
+    padding: var(--space-3xl) var(--space-2xl);
+  }
+
+  /* Topbar user name hides */
+  .bo-topbar__username {
+    display: none;
+  }
+}
+
+/* ── ≤ 600px ──────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+
+  .ewa-stats-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-card {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .bo-header__top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .ewa-table-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .modal__header {
+    padding: var(--space-lg) var(--space-lg) var(--space-md);
+  }
+
+  .modal__body {
+    padding: var(--space-sm) var(--space-lg) var(--space-lg);
+  }
+
+  .modal__footer {
+    padding: var(--space-md) var(--space-lg);
+    flex-direction: column;
+  }
+
+  .modal__footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

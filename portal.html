@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EWA Configuration — DoPay Enterprise Portal</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="bo-shell">
+
+  <!-- ══════════════════════════════════════════════════════
+       TOPBAR
+  ══════════════════════════════════════════════════════════ -->
+  <header class="bo-topbar" role="banner">
+    <div class="bo-topbar__brand">
+      <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="#6e37cc"/>
+        <path d="M10 10h7a5 5 0 0 1 0 10h-3v4h-4V10zm4 3v4h3a2 2 0 1 0 0-4h-3z" fill="#ffffff"/>
+      </svg>
+      <span class="bo-topbar__logo-text">DoPay</span>
+      <span class="bo-topbar__sep" aria-hidden="true"></span>
+      <span class="bo-topbar__org">Acme Corp</span>
+    </div>
+
+    <div class="bo-topbar__right">
+      <span class="bo-topbar__env-pill">Enterprise</span>
+      <div class="bo-topbar__user" role="button" tabindex="0" aria-label="User menu">
+        <div class="bo-topbar__avatar" aria-hidden="true">SA</div>
+        <span class="bo-topbar__username">Sayed A.</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════
+       SUB-HEADER
+  ══════════════════════════════════════════════════════════ -->
+  <div class="bo-header" role="navigation" aria-label="Page navigation">
+    <div class="bo-header__inner">
+      <div class="bo-header__top">
+        <nav class="bo-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html" class="bo-breadcrumb__item">Portal</a>
+          <span class="bo-breadcrumb__sep" aria-hidden="true">›</span>
+          <span class="bo-breadcrumb__item bo-breadcrumb__item--active" aria-current="page">EWA Configuration</span>
+        </nav>
+      </div>
+
+      <!-- Top-level tabs -->
+      <div class="bo-tabs scroll-hidden" role="tablist" aria-label="Main sections" data-tab-group="main">
+        <button class="bo-tab is-active" role="tab" data-tab="configuration" aria-selected="true">Configuration</button>
+        <button class="bo-tab" role="tab" data-tab="employees" aria-selected="false">Employees</button>
+        <button class="bo-tab" role="tab" data-tab="activity" aria-selected="false">Activity</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       MAIN CONTENT
+  ══════════════════════════════════════════════════════════ -->
+  <main class="bo-main" id="main-content">
+
+    <!-- ── TAB: Configuration ────────────────────────────── -->
+    <div data-tab-panel="main" data-tab="configuration">
+      <div class="ewa-split-layout">
+
+        <!-- Sidebar nav -->
+        <nav class="ewa-split-nav" aria-label="Settings sections">
+          <span class="ewa-split-nav__label">Settings</span>
+
+          <button class="ewa-split-nav__btn is-active" data-section="general">
+            <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="5" height="5" rx="1" fill="currentColor" opacity=".7"/>
+              <rect x="9" y="2" width="5" height="5" rx="1" fill="currentColor" opacity=".7"/>
+              <rect x="2" y="9" width="5" height="5" rx="1" fill="currentColor" opacity=".7"/>
+              <rect x="9" y="9" width="5" height="5" rx="1" fill="currentColor" opacity=".7"/>
+            </svg>
+            General
+          </button>
+
+          <button class="ewa-split-nav__btn" data-section="advance-limits">
+            <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M2 11l3-4 3 2 3-5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Advance Limits
+          </button>
+
+          <button class="ewa-split-nav__btn" data-section="eligibility">
+            <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Eligibility
+          </button>
+
+          <button class="ewa-split-nav__btn" data-section="fees">
+            <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 5v6M6 6.5h3a1 1 0 0 1 0 2H7a1 1 0 0 0 0 2h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+            Fees &amp; Charges
+          </button>
+
+          <button class="ewa-split-nav__btn" data-section="notifications">
+            <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2a4 4 0 0 0-4 4v3l-1 1v1h10v-1l-1-1V6a4 4 0 0 0-4-4z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M6.5 13a1.5 1.5 0 0 0 3 0" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            Notifications
+          </button>
+        </nav>
+
+        <!-- Settings content -->
+        <div style="display:flex;flex-direction:column;gap:var(--space-xl);">
+
+          <!-- Unsaved changes bar (hidden by default, shown via JS when changes exist) -->
+          <div class="ewa-unsaved-bar" id="unsaved-bar" hidden>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 5v3.5M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            You have unsaved changes
+          </div>
+
+          <!-- ── Section: General ───────────────────────── -->
+          <article class="ewa-card" id="general" data-nav-section>
+            <div class="ewa-section">
+              <p class="ewa-section__label">Overview</p>
+              <h2 class="ewa-section__title">General Settings</h2>
+              <p class="ewa-section__desc">Configure the core EWA program settings for your organization. Changes take effect on the next payroll cycle.</p>
+            </div>
+
+            <div class="ewa-section">
+              <!-- Field: EWA Program enabled -->
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">EWA Program</p>
+                  <p class="ewa-field__help">Enable or disable the earned wage access program for all eligible employees.</p>
+                </div>
+                <div style="display:flex;align-items:center;gap:var(--space-sm);padding-top:8px;">
+                  <label class="ewa-toggle is-on" aria-label="EWA Program enabled">
+                    <input class="ewa-toggle__input" type="checkbox" checked>
+                    <span class="ewa-toggle__track"></span>
+                  </label>
+                  <span class="text-body">Enabled</span>
+                  <span class="badge badge-teal">Active</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <!-- Field: Program name -->
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Program Name</p>
+                  <p class="ewa-field__help">The name displayed to employees in the mobile app.</p>
+                </div>
+                <div>
+                  <label class="form-label sr-only" for="program-name">Program Name</label>
+                  <input class="ewa-input" type="text" id="program-name" value="Acme Advance" placeholder="e.g. MyPay Advance">
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <!-- Field: Pay cycle -->
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Pay Cycle</p>
+                  <p class="ewa-field__help">The frequency at which your organization runs payroll.</p>
+                </div>
+                <div class="ewa-select-wrap">
+                  <label class="form-label sr-only" for="pay-cycle">Pay Cycle</label>
+                  <select class="ewa-select" id="pay-cycle">
+                    <option value="weekly">Weekly</option>
+                    <option value="biweekly" selected>Bi-weekly</option>
+                    <option value="semimonthly">Semi-monthly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <!-- Field: Cutoff period -->
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Advance Cutoff</p>
+                  <p class="ewa-field__help">Number of days before payday when advance requests are disabled.</p>
+                </div>
+                <div>
+                  <label class="form-label sr-only" for="cutoff-days">Advance Cutoff Days</label>
+                  <input class="ewa-input" type="number" id="cutoff-days" value="2" min="0" max="7" style="width:100px;">
+                  <p class="text-help" style="margin-top:6px;">days before payday</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-action-row">
+              <button class="btn btn-ghost" type="button">Cancel</button>
+              <button class="btn btn-primary" type="button">Save Changes</button>
+            </div>
+          </article>
+
+          <!-- ── Section: Advance Limits ────────────────── -->
+          <article class="ewa-card" id="advance-limits" data-nav-section>
+            <div class="ewa-section">
+              <p class="ewa-section__label">Limits</p>
+              <h2 class="ewa-section__title">Advance Limits</h2>
+              <p class="ewa-section__desc">Control how much employees can access before their next payday. Limits are evaluated per request.</p>
+            </div>
+
+            <div class="ewa-section">
+              <!-- Field: Max percentage -->
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Maximum Advance Percentage</p>
+                  <p class="ewa-field__help">The maximum percentage of earned wages an employee may access in a single pay period.</p>
+                </div>
+                <div>
+                  <label class="form-label sr-only" for="max-pct">Maximum Percentage</label>
+                  <div style="display:flex;align-items:center;gap:var(--space-sm);">
+                    <input class="ewa-input" type="number" id="max-pct" value="50" min="10" max="80" style="width:100px;">
+                    <span class="text-help">% of earned wages</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <!-- Field: Max amount -->
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Maximum Advance Amount</p>
+                  <p class="ewa-field__help">Hard cap on the amount regardless of earnings. Leave blank to apply no fixed cap.</p>
+                </div>
+                <div class="ewa-input-pair">
+                  <div class="ewa-select-wrap">
+                    <select class="ewa-select" aria-label="Currency">
+                      <option value="EGP" selected>EGP</option>
+                      <option value="USD">USD</option>
+                    </select>
+                  </div>
+                  <input class="ewa-input" type="number" id="max-amount" value="5000" placeholder="e.g. 5000">
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <!-- Field: Max advances per cycle -->
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Advances per Pay Period</p>
+                  <p class="ewa-field__help">Maximum number of advance requests allowed within one pay period.</p>
+                </div>
+                <div>
+                  <label class="form-label sr-only" for="max-count">Advances per Period</label>
+                  <div class="ewa-pill-group" role="group" aria-label="Advances per period" data-tab-group="advances-per-period">
+                    <button class="ewa-pill-group__btn" role="radio" data-tab="1" aria-checked="false">1</button>
+                    <button class="ewa-pill-group__btn is-active" role="radio" data-tab="2" aria-checked="true">2</button>
+                    <button class="ewa-pill-group__btn" role="radio" data-tab="3" aria-checked="false">3</button>
+                    <button class="ewa-pill-group__btn" role="radio" data-tab="unlimited" aria-checked="false">Unlimited</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-action-row">
+              <button class="btn btn-ghost" type="button">Cancel</button>
+              <button class="btn btn-primary" type="button">Save Changes</button>
+            </div>
+          </article>
+
+          <!-- ── Section: Eligibility ───────────────────── -->
+          <article class="ewa-card" id="eligibility" data-nav-section>
+            <div class="ewa-section">
+              <p class="ewa-section__label">Access</p>
+              <h2 class="ewa-section__title">Employee Eligibility</h2>
+              <p class="ewa-section__desc">Define which employees qualify for EWA and set minimum requirements for enrollment.</p>
+            </div>
+
+            <div class="ewa-section">
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Minimum Employment Duration</p>
+                  <p class="ewa-field__help">Employees must be employed for at least this many days before becoming eligible.</p>
+                </div>
+                <div>
+                  <div style="display:flex;align-items:center;gap:var(--space-sm);">
+                    <input class="ewa-input" type="number" id="min-days" value="90" min="0" style="width:100px;">
+                    <span class="text-help">days of employment</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Include Part-time Employees</p>
+                  <p class="ewa-field__help">When enabled, part-time employees are eligible for EWA based on their earned hours.</p>
+                </div>
+                <div style="display:flex;align-items:center;gap:var(--space-sm);padding-top:8px;">
+                  <label class="ewa-toggle" aria-label="Include part-time employees">
+                    <input class="ewa-toggle__input" type="checkbox">
+                    <span class="ewa-toggle__track"></span>
+                  </label>
+                  <span class="text-body">Disabled</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Employment Type</p>
+                  <p class="ewa-field__help">Restrict EWA access to specific employment types.</p>
+                </div>
+                <div class="ewa-select-wrap">
+                  <select class="ewa-select" id="employment-type">
+                    <option value="all" selected>All types</option>
+                    <option value="fulltime">Full-time only</option>
+                    <option value="contract">Contract only</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-action-row">
+              <button class="btn btn-ghost" type="button">Cancel</button>
+              <button class="btn btn-primary" type="button">Save Changes</button>
+            </div>
+          </article>
+
+          <!-- ── Section: Fees ──────────────────────────── -->
+          <article class="ewa-card" id="fees" data-nav-section>
+            <div class="ewa-section">
+              <p class="ewa-section__label">Pricing</p>
+              <h2 class="ewa-section__title">Fees &amp; Charges</h2>
+              <p class="ewa-section__desc">Configure the transaction fees applied to each advance. Fees can be borne by the employer or the employee.</p>
+            </div>
+
+            <div class="ewa-section">
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Transaction Fee Model</p>
+                  <p class="ewa-field__help">Determines who pays the service fee for each advance.</p>
+                </div>
+                <div class="ewa-select-wrap">
+                  <select class="ewa-select" id="fee-model">
+                    <option value="employer" selected>Employer-sponsored (free for employees)</option>
+                    <option value="employee">Employee-paid</option>
+                    <option value="split">Split equally</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Fixed Fee per Transaction</p>
+                  <p class="ewa-field__help">Flat fee charged per advance request, regardless of the amount.</p>
+                </div>
+                <div class="ewa-input-pair">
+                  <div class="ewa-select-wrap">
+                    <select class="ewa-select" aria-label="Currency">
+                      <option value="EGP" selected>EGP</option>
+                    </select>
+                  </div>
+                  <input class="ewa-input" type="number" id="fixed-fee" value="10" min="0" placeholder="0">
+                </div>
+              </div>
+            </div>
+
+            <div class="ewa-action-row">
+              <button class="btn btn-ghost" type="button">Cancel</button>
+              <button class="btn btn-primary" type="button">Save Changes</button>
+            </div>
+          </article>
+
+          <!-- ── Section: Notifications ─────────────────── -->
+          <article class="ewa-card" id="notifications" data-nav-section>
+            <div class="ewa-section">
+              <p class="ewa-section__label">Alerts</p>
+              <h2 class="ewa-section__title">Notifications</h2>
+              <p class="ewa-section__desc">Control which events trigger notifications and who receives them.</p>
+            </div>
+
+            <div class="ewa-section">
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Advance Approved</p>
+                  <p class="ewa-field__help">Notify employee when their advance request is approved.</p>
+                </div>
+                <label class="ewa-toggle is-on" aria-label="Notify on advance approved">
+                  <input class="ewa-toggle__input" type="checkbox" checked>
+                  <span class="ewa-toggle__track"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Advance Rejected</p>
+                  <p class="ewa-field__help">Notify employee when their advance request is declined.</p>
+                </div>
+                <label class="ewa-toggle is-on" aria-label="Notify on advance rejected">
+                  <input class="ewa-toggle__input" type="checkbox" checked>
+                  <span class="ewa-toggle__track"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="ewa-section">
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Monthly Summary to HR</p>
+                  <p class="ewa-field__help">Send a monthly summary report to the HR admin email address.</p>
+                </div>
+                <label class="ewa-toggle" aria-label="Monthly summary to HR">
+                  <input class="ewa-toggle__input" type="checkbox">
+                  <span class="ewa-toggle__track"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="ewa-action-row">
+              <button class="btn btn-ghost" type="button">Cancel</button>
+              <button class="btn btn-primary" type="button">Save Changes</button>
+            </div>
+          </article>
+
+        </div><!-- /settings content -->
+      </div><!-- /split-layout -->
+    </div><!-- /tab: configuration -->
+
+
+    <!-- ── TAB: Employees ─────────────────────────────────── -->
+    <div data-tab-panel="main" data-tab="employees" hidden>
+
+      <!-- Stats strip -->
+      <div class="ewa-stats-strip">
+        <div class="stat-card">
+          <p class="stat-card__label">Total Employees</p>
+          <p class="stat-card__value num">1,284</p>
+          <p class="stat-card__sub">Across all departments</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-card__label">EWA Enrolled</p>
+          <p class="stat-card__value num">947</p>
+          <p class="stat-card__sub">73.7% enrollment rate</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-card__label">Active This Month</p>
+          <p class="stat-card__value num">312</p>
+          <p class="stat-card__sub">Made at least 1 advance</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-card__label">Avg. Advance</p>
+          <p class="stat-card__value num">EGP 840</p>
+          <p class="stat-card__sub">Per transaction</p>
+        </div>
+      </div>
+
+      <div class="ewa-card">
+        <!-- Toolbar -->
+        <div class="ewa-toolbar">
+          <div class="ewa-toolbar__left">
+            <div class="ewa-search" role="search">
+              <svg class="ewa-search__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <input class="ewa-search__input" type="search" placeholder="Search employees…" aria-label="Search employees">
+            </div>
+            <div class="ewa-select-wrap">
+              <select class="ewa-select ewa-select--sm" aria-label="Filter by department">
+                <option value="">All departments</option>
+                <option value="engineering">Engineering</option>
+                <option value="operations">Operations</option>
+                <option value="hr">Human Resources</option>
+                <option value="finance">Finance</option>
+              </select>
+            </div>
+          </div>
+          <div class="ewa-toolbar__right">
+            <div class="ewa-pill-group" role="group" aria-label="Employee status filter" data-tab-group="emp-status">
+              <button class="ewa-pill-group__btn is-active" data-tab="all">All</button>
+              <button class="ewa-pill-group__btn" data-tab="enrolled">Enrolled</button>
+              <button class="ewa-pill-group__btn" data-tab="not-enrolled">Not enrolled</button>
+            </div>
+            <button class="btn btn-primary btn-sm" data-modal-open="invite-modal">
+              + Invite Employee
+            </button>
+          </div>
+        </div>
+
+        <!-- Subtabs -->
+        <div class="ewa-subtabs scroll-hidden" role="tablist" aria-label="Employee groups" data-tab-group="emp-groups">
+          <button class="ewa-subtabs__btn is-active" role="tab" data-tab="all-emp">
+            All employees
+            <span class="ewa-subtabs__count">1,284</span>
+          </button>
+          <button class="ewa-subtabs__btn" role="tab" data-tab="active-emp">
+            Active
+            <span class="ewa-subtabs__count">947</span>
+          </button>
+          <button class="ewa-subtabs__btn" role="tab" data-tab="inactive-emp">
+            Inactive
+            <span class="ewa-subtabs__count">337</span>
+          </button>
+        </div>
+
+        <!-- Table -->
+        <div class="ewa-table-wrap">
+          <table class="ewa-table" aria-label="Employees list">
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Advances This Month</th>
+                <th>Total Advanced</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="ewa-name-cell">
+                    <div class="ewa-avatar" aria-hidden="true">MK</div>
+                    <div>
+                      <p class="ewa-name-cell__primary">Mohamed Kamal</p>
+                      <p class="ewa-name-cell__secondary num">EMP-00142</p>
+                    </div>
+                  </div>
+                </td>
+                <td>Engineering</td>
+                <td><span class="badge badge-teal">Active</span></td>
+                <td class="num">2</td>
+                <td class="num">EGP 1,600</td>
+                <td>
+                  <button class="ewa-table-action" data-modal-open="employee-modal">View</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="ewa-name-cell">
+                    <div class="ewa-avatar" aria-hidden="true">RA</div>
+                    <div>
+                      <p class="ewa-name-cell__primary">Rania Abbas</p>
+                      <p class="ewa-name-cell__secondary num">EMP-00098</p>
+                    </div>
+                  </div>
+                </td>
+                <td>Operations</td>
+                <td><span class="badge badge-teal">Active</span></td>
+                <td class="num">1</td>
+                <td class="num">EGP 500</td>
+                <td>
+                  <button class="ewa-table-action" data-modal-open="employee-modal">View</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="ewa-name-cell">
+                    <div class="ewa-avatar" aria-hidden="true">TH</div>
+                    <div>
+                      <p class="ewa-name-cell__primary">Tarek Hassan</p>
+                      <p class="ewa-name-cell__secondary num">EMP-00211</p>
+                    </div>
+                  </div>
+                </td>
+                <td>Finance</td>
+                <td><span class="badge badge-neutral">Not enrolled</span></td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+                <td>
+                  <button class="ewa-table-action">Enroll</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="ewa-name-cell">
+                    <div class="ewa-avatar" aria-hidden="true">SB</div>
+                    <div>
+                      <p class="ewa-name-cell__primary">Sara Badr</p>
+                      <p class="ewa-name-cell__secondary num">EMP-00055</p>
+                    </div>
+                  </div>
+                </td>
+                <td>Human Resources</td>
+                <td><span class="badge badge-teal">Active</span></td>
+                <td class="num">3</td>
+                <td class="num">EGP 2,400</td>
+                <td>
+                  <button class="ewa-table-action" data-modal-open="employee-modal">View</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="ewa-name-cell">
+                    <div class="ewa-avatar" aria-hidden="true">AO</div>
+                    <div>
+                      <p class="ewa-name-cell__primary">Ahmed Omar</p>
+                      <p class="ewa-name-cell__secondary num">EMP-00317</p>
+                    </div>
+                  </div>
+                </td>
+                <td>Engineering</td>
+                <td><span class="badge badge-neutral" style="background:rgba(212,78,44,0.1);color:var(--color-error);">Suspended</span></td>
+                <td class="num">—</td>
+                <td class="num">EGP 750</td>
+                <td>
+                  <button class="ewa-table-action">Unsuspend</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table footer -->
+        <div class="ewa-table-footer">
+          <p class="ewa-table-footer__count">Showing 5 of 1,284 employees</p>
+          <nav class="ewa-pagination" aria-label="Table pagination" data-pagination>
+            <button class="ewa-pagination__arrow ewa-pagination__prev" aria-label="Previous page" disabled>‹</button>
+            <button class="ewa-pagination__page is-active">1</button>
+            <button class="ewa-pagination__page">2</button>
+            <button class="ewa-pagination__page">3</button>
+            <span style="padding:0 4px;color:var(--color-muted-text);font-size:13px;">…</span>
+            <button class="ewa-pagination__page">26</button>
+            <button class="ewa-pagination__arrow ewa-pagination__next" aria-label="Next page">›</button>
+          </nav>
+        </div>
+
+      </div><!-- /ewa-card -->
+    </div><!-- /tab: employees -->
+
+
+    <!-- ── TAB: Activity ──────────────────────────────────── -->
+    <div data-tab-panel="main" data-tab="activity" hidden>
+
+      <!-- Stats strip -->
+      <div class="ewa-stats-strip">
+        <div class="stat-card">
+          <p class="stat-card__label">Advances This Month</p>
+          <p class="stat-card__value num">628</p>
+          <p class="stat-card__sub">+12% vs last month</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-card__label">Total Disbursed</p>
+          <p class="stat-card__value num">EGP 527K</p>
+          <p class="stat-card__sub">May 2026</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-card__label">Pending Requests</p>
+          <p class="stat-card__value num">14</p>
+          <p class="stat-card__sub">Awaiting processing</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-card__label">Repayment Rate</p>
+          <p class="stat-card__value num">99.2%</p>
+          <p class="stat-card__sub">On-time deductions</p>
+        </div>
+      </div>
+
+      <div class="ewa-card">
+        <!-- Toolbar -->
+        <div class="ewa-toolbar">
+          <div class="ewa-toolbar__left">
+            <div class="ewa-search" role="search">
+              <svg class="ewa-search__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <input class="ewa-search__input" type="search" placeholder="Search transactions…" aria-label="Search activity">
+            </div>
+            <div class="ewa-select-wrap">
+              <select class="ewa-select ewa-select--sm" aria-label="Filter by period">
+                <option value="this-month" selected>This month</option>
+                <option value="last-month">Last month</option>
+                <option value="last-3">Last 3 months</option>
+                <option value="ytd">Year to date</option>
+              </select>
+            </div>
+          </div>
+          <div class="ewa-toolbar__right">
+            <div class="ewa-pill-group" role="group" aria-label="Transaction status" data-tab-group="tx-status">
+              <button class="ewa-pill-group__btn is-active" data-tab="all-tx">All</button>
+              <button class="ewa-pill-group__btn" data-tab="approved-tx">Approved</button>
+              <button class="ewa-pill-group__btn" data-tab="pending-tx">Pending</button>
+              <button class="ewa-pill-group__btn" data-tab="rejected-tx">Rejected</button>
+            </div>
+            <button class="btn btn-ghost btn-sm">
+              Export CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="ewa-table-wrap">
+          <table class="ewa-table" aria-label="Activity log">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Employee</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Requested</th>
+                <th>Settled</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="num" style="color:var(--color-muted-text);font-size:13px;">TXN-20260504-001</td>
+                <td>
+                  <div class="ewa-name-cell">
+                    <div class="ewa-avatar" aria-hidden="true">MK</div>
+                    <div>
+                      <p class="ewa-name-cell__primary">Mohamed Kamal</p>
+                      <p class="ewa-name-cell__secondary">Engineering</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="num" style="font-weight:500;">EGP 800</td>
+                <td><span class="badge badge-teal">Approved</span></td>
+                <td style="color:var(--color-muted-text);font-size:13px;">May 4, 2026</td>
+                <td style="color:var(--color-muted-text);font-size:13px;">May 25, 2026</td>
+                <td><button class="ewa-table-action">Details</button></td>
+              </tr>
+              <tr>
+                <td class="num" style="color:var(--color-muted-text);font-size:13px;">TXN-20260503-089</td>
+                <td>
+                  <div class="ewa-name-cell">
+                    <div class="ewa-avatar" aria-hidden="true">SB</div>
+                    <div>
+                      <p class="ewa-name-cell__primary">Sara Badr</p>
+                      <p class="ewa-name-cell__secondary">Human Resources</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="num" style="font-weight:500;">EGP 1,200</td>
+                <td><span class="badge badge-teal">Approved</span></td>
+                <td style="color:var(--color-muted-text);font-size:13px;">May 3, 2026</td>
+                <td style="color:var(--color-muted-text);font-size:13px;">May 25, 2026</td>
+                <td><button class="ewa-table-action">Details</button></td>
+              </tr>
+              <tr>
+                <td class="num" style="color:var(--color-muted-text);font-size:13px;">TXN-20260503-088</td>
+                <td>
+                  <div class="ewa-name-cell">
+                    <div class="ewa-avatar" aria-hidden="true">RA</div>
+                    <div>
+                      <p class="ewa-name-cell__primary">Rania Abbas</p>
+                      <p class="ewa-name-cell__secondary">Operations</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="num" style="font-weight:500;">EGP 500</td>
+                <td><span class="badge" style="background:rgba(255,170,0,0.12);color:#a06b00;">Pending</span></td>
+                <td style="color:var(--color-muted-text);font-size:13px;">May 3, 2026</td>
+                <td style="color:var(--color-muted-text);font-size:13px;">—</td>
+                <td><button class="ewa-table-action">Details</button></td>
+              </tr>
+              <tr>
+                <td class="num" style="color:var(--color-muted-text);font-size:13px;">TXN-20260502-071</td>
+                <td>
+                  <div class="ewa-name-cell">
+                    <div class="ewa-avatar" aria-hidden="true">AO</div>
+                    <div>
+                      <p class="ewa-name-cell__primary">Ahmed Omar</p>
+                      <p class="ewa-name-cell__secondary">Engineering</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="num" style="font-weight:500;">EGP 750</td>
+                <td><span class="badge badge-error">Rejected</span></td>
+                <td style="color:var(--color-muted-text);font-size:13px;">May 2, 2026</td>
+                <td style="color:var(--color-muted-text);font-size:13px;">—</td>
+                <td><button class="ewa-table-action">Details</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ewa-table-footer">
+          <p class="ewa-table-footer__count">Showing 4 of 628 transactions</p>
+          <nav class="ewa-pagination" aria-label="Activity pagination" data-pagination>
+            <button class="ewa-pagination__arrow ewa-pagination__prev" aria-label="Previous page" disabled>‹</button>
+            <button class="ewa-pagination__page is-active">1</button>
+            <button class="ewa-pagination__page">2</button>
+            <button class="ewa-pagination__page">3</button>
+            <span style="padding:0 4px;color:var(--color-muted-text);font-size:13px;">…</span>
+            <button class="ewa-pagination__page">16</button>
+            <button class="ewa-pagination__arrow ewa-pagination__next" aria-label="Next page">›</button>
+          </nav>
+        </div>
+
+      </div>
+    </div><!-- /tab: activity -->
+
+  </main><!-- /bo-main -->
+</div><!-- /bo-shell -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════════════════════ -->
+
+<!-- Employee detail modal -->
+<div class="modal-backdrop" data-modal="employee-modal" aria-hidden="true" role="dialog" aria-labelledby="emp-modal-title" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title" id="emp-modal-title">Employee Details</h2>
+      <button class="modal__close" data-modal-close aria-label="Close modal">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <div style="display:flex;align-items:center;gap:var(--space-md);margin-bottom:var(--space-xl);">
+        <div class="ewa-avatar" style="width:48px;height:48px;font-size:16px;" aria-hidden="true">MK</div>
+        <div>
+          <p style="font-size:16px;font-weight:600;color:var(--color-ink);">Mohamed Kamal</p>
+          <p class="text-small num">EMP-00142 · Engineering</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+        <div style="display:flex;justify-content:space-between;padding:var(--space-sm) 0;border-bottom:1px solid var(--color-divider);">
+          <span class="text-help">EWA Status</span>
+          <span class="badge badge-teal">Active</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:var(--space-sm) 0;border-bottom:1px solid var(--color-divider);">
+          <span class="text-help">Advances this month</span>
+          <span class="text-body num">2</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:var(--space-sm) 0;border-bottom:1px solid var(--color-divider);">
+          <span class="text-help">Total advanced (MTD)</span>
+          <span class="text-body num">EGP 1,600</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:var(--space-sm) 0;">
+          <span class="text-help">Enrollment date</span>
+          <span class="text-body">Jan 12, 2025</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn-ghost" data-modal-close>Close</button>
+      <button class="btn btn-danger">Suspend Access</button>
+    </div>
+  </div>
+</div>
+
+<!-- Invite employee modal -->
+<div class="modal-backdrop" data-modal="invite-modal" aria-hidden="true" role="dialog" aria-labelledby="invite-modal-title" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title" id="invite-modal-title">Invite Employee</h2>
+      <button class="modal__close" data-modal-close aria-label="Close modal">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <p style="margin-bottom:var(--space-xl);">Send an invitation to enroll in the EWA program. The employee will receive a link via their registered email.</p>
+      <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+        <div>
+          <label class="form-label" for="invite-name">Full name</label>
+          <input class="ewa-input" type="text" id="invite-name" placeholder="Employee full name">
+        </div>
+        <div>
+          <label class="form-label" for="invite-email">Work email</label>
+          <input class="ewa-input" type="email" id="invite-email" placeholder="employee@company.com">
+        </div>
+        <div>
+          <label class="form-label" for="invite-dept">Department</label>
+          <div class="ewa-select-wrap">
+            <select class="ewa-select" id="invite-dept">
+              <option value="">Select department…</option>
+              <option value="engineering">Engineering</option>
+              <option value="operations">Operations</option>
+              <option value="hr">Human Resources</option>
+              <option value="finance">Finance</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn-ghost" data-modal-close>Cancel</button>
+      <button class="btn btn-primary">Send Invitation</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="js/tabs.js"></script>
+<script src="js/toggle.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>

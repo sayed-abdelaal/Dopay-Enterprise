@@ -1,0 +1,98 @@
+/* ============================================================
+   DoPay Enterprise Portal — Design Tokens
+   Single source of truth. All values from design.md.
+   ============================================================ */
+
+:root {
+
+  /* ── Brand Purple ─────────────────────────────────────── */
+  --color-primary:          #6e37cc;
+  --color-primary-hover:    #5f2fc0;
+  --color-primary-hover-alt:#5d2eb2;
+  --color-primary-light:    #f1eafe;
+  --color-primary-muted:    #e0d1fa;
+  --color-primary-border:   #d7c6f5;
+  --color-primary-border-alt:#c7b0ee;
+  --color-deep-purple:      #3d0f8a;
+  --color-nav-active:       #201d34;
+
+  /* ── Teal / Success ───────────────────────────────────── */
+  --color-teal-bg:          #cce6e5;
+  --color-teal-text:        #004d4a;
+  --color-teal-active:      #00807c;
+
+  /* ── Neutrals ─────────────────────────────────────────── */
+  --color-ink:              #181818;
+  --color-dark-shell:       #1b1b1b;
+  --color-body-bg:          #f8f7f8;
+  --color-surface:          #ffffff;
+  --color-subtle-bg:        #f3f1f6;
+  --color-toolbar-bg:       #efecf2;
+  --color-toolbar-bg-alt:   #f1eff1;
+  --color-muted-text:       #5f5e5f;
+  --color-placeholder:      #b9b3c2;
+  --color-muted-light:      #726a86;
+  --color-disabled:         #8c839b;
+  --color-divider:          rgba(24, 24, 24, 0.08);
+  --color-card-border:      rgba(24, 24, 24, 0.06);
+  --color-input-border:     rgba(24, 24, 24, 0.16);
+  --color-input-border-hover: rgba(24, 24, 24, 0.26);
+  --color-toggle-off:       #bebcbe;
+  --color-badge-bg:         #edebed;
+
+  /* ── Semantic ─────────────────────────────────────────── */
+  --color-error:            #d44e2c;
+
+  /* ── Landing ──────────────────────────────────────────── */
+  --gradient-landing:       linear-gradient(180deg, #f8f7f8 0%, #f2eef6 100%);
+  --color-eyebrow-bg:       #ede6fa;
+
+  /* ── Spacing (base-4 / base-8 rhythm) ────────────────── */
+  --space-xs:               4px;
+  --space-sm:               8px;
+  --space-md:               12px;
+  --space-lg:               16px;
+  --space-xl:               18px;
+  --space-2xl:              24px;
+  --space-3xl:              32px;
+  --space-4xl:              36px;
+  --space-page-bottom:      96px;
+
+  /* ── Border Radius ────────────────────────────────────── */
+  --radius-landing-card:    20px;
+  --radius-split-nav:       18px;
+  --radius-version-menu:    16px;
+  --radius-card:            14px;
+  --radius-modal:           14px;
+  --radius-split-nav-btn:   14px;
+  --radius-inline-nav:      12px;
+  --radius-landing-cta:     12px;
+  --radius-search:          10px;
+  --radius-table-action:    10px;
+  --radius-inline-nav-btn:  10px;
+  --radius-button:          8px;
+  --radius-input:           8px;
+  --radius-pill-group:      10px;
+  --radius-pill-group-btn:  8px;
+  --radius-pill:            999px;
+
+  /* ── Shadows / Elevation ──────────────────────────────── */
+  --shadow-card:            0 1px 0 rgba(0, 0, 0, 0.08);
+  --shadow-dropdown:        0 12px 32px rgba(25, 24, 38, 0.1);
+  --shadow-version:         0 10px 24px rgba(25, 24, 38, 0.12);
+  --shadow-modal:           0 24px 60px rgba(32, 29, 52, 0.18);
+  --shadow-landing-card:    0 20px 60px rgba(31, 26, 43, 0.08);
+  --shadow-focus:           0 0 0 3px rgba(110, 55, 204, 0.18);
+  --shadow-toggle-hover:    0 0 0 4px rgba(110, 55, 204, 0.08);
+  --shadow-pill-active:     0 1px 0 rgba(0, 0, 0, 0.09);
+
+  /* ── Typography ───────────────────────────────────────── */
+  --font-family: "Euclid Circular A", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* ── Transitions ──────────────────────────────────────── */
+  --transition-standard:    background-color 0.16s ease, border-color 0.16s ease,
+                            color 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+  --transition-toggle-knob: transform 0.15s ease;
+  --transition-toggle-bg:   background-color 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  --transition-cta:         background 0.2s ease, transform 0.2s ease;
+}

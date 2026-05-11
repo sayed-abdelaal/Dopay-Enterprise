@@ -1,0 +1,161 @@
+/* ============================================================
+   DoPay Enterprise Portal — Layout
+   Shell structure, grid systems, page patterns
+   ============================================================ */
+
+/* ── Landing Shell ────────────────────────────────────────── */
+
+.landing-body {
+  background: var(--gradient-landing);
+  min-height: 100vh;
+}
+
+.landing-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+/* ── Back-Office Shell ────────────────────────────────────── */
+
+.bo-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Topbar */
+.bo-topbar {
+  background: var(--color-dark-shell);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px var(--space-4xl);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Sub-header */
+.bo-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-divider);
+  flex-shrink: 0;
+  position: sticky;
+  top: 52px;
+  z-index: 90;
+}
+
+.bo-header__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-4xl);
+}
+
+.bo-header__top {
+  padding: var(--space-lg) 0 var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+/* Main content area */
+.bo-main {
+  flex: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-3xl) var(--space-4xl) var(--space-page-bottom);
+}
+
+/* ── Split Layout (Settings pages) ───────────────────────── */
+
+.ewa-split-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+/* ── Field Layout (two-column form rows) ──────────────────── */
+
+.ewa-field {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-2xl) var(--space-3xl);
+  align-items: start;
+}
+
+.ewa-field__label-group {
+  padding-top: 10px;
+}
+
+.ewa-field__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: var(--space-xs);
+}
+
+.ewa-field__help {
+  font-size: 13px;
+  color: var(--color-muted-text);
+  line-height: 1.5;
+  max-width: 400px;
+}
+
+/* ── Two-Column Card Grid ─────────────────────────────────── */
+
+.ewa-v2-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xl);
+}
+
+/* ── Input Pair (side-by-side inputs) ────────────────────── */
+
+.ewa-input-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+/* ── Stats Strip ──────────────────────────────────────────── */
+
+.ewa-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+/* ── Unsaved Changes Bar ──────────────────────────────────── */
+
+.ewa-unsaved-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: rgba(212, 78, 44, 0.06);
+  border: 1px solid rgba(212, 78, 44, 0.16);
+  border-radius: var(--radius-button);
+  font-size: 13px;
+  color: var(--color-error);
+  font-weight: 500;
+  margin-bottom: var(--space-xl);
+}
+
+/* ── Action Row (save/cancel footer) ─────────────────────── */
+
+.ewa-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-3xl);
+  border-top: 1px solid var(--color-divider);
+}

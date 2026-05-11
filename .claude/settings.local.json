@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Read(//g/00-WORK/01-DoPay/ENT/dopay-back-office/**)",
+      "Bash(unzip -o dopay-back-office.zip -d extracted)"
+    ]
+  }
+}

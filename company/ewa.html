@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acme Corp — EWA</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    /* ── V6 EWA page — component extensions ─────────────────
+       All values reference CSS tokens from tokens.css.
+       These patterns are not yet in components.css.
+    ──────────────────────────────────────────────────────── */
+
+    /* Status chip inside split nav button */
+    .v6-status-chip {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .v6-status-chip[data-state="enabled"] {
+      background: var(--color-teal-bg);
+      color: var(--color-teal-text);
+    }
+    .v6-status-chip[data-state="disabled"] {
+      background: var(--color-badge-bg);
+      color: var(--color-muted-text);
+    }
+
+    /* Panel heading */
+    .v6-panel-heading {
+      margin-bottom: var(--space-xl);
+    }
+    .v6-panel-heading h2 {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--color-ink);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-xs);
+    }
+    .v6-panel-heading p {
+      font-size: 14px;
+      color: var(--color-muted-text);
+    }
+
+    /* Inline toggle + label */
+    .v6-toggle-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding-top: 8px;
+    }
+    .v6-toggle-row__text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-ink);
+    }
+
+    /* Override component — default (global) view */
+    .override-default {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: 10px var(--space-lg);
+      background: var(--color-subtle-bg);
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius-input);
+      transition: var(--transition-standard);
+    }
+    .override-default.is-overridden {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary-border);
+    }
+    .override-default__label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 3px;
+      transition: var(--transition-standard);
+    }
+    .override-default:not(.is-overridden) .override-default__label {
+      color: var(--color-muted-text);
+    }
+    .override-default.is-overridden .override-default__label {
+      color: var(--color-primary);
+    }
+    .override-default__value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+
+    /* Override component — editor view */
+    .override-editor {
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-primary-light);
+      border: 1px solid var(--color-primary-border);
+      border-radius: var(--radius-input);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .override-editor__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--color-muted-text);
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .override-editor__global {
+      font-weight: 600;
+      color: var(--color-deep-purple);
+    }
+
+    /* Input + suffix */
+    .ewa-suffix-wrap {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--color-input-border);
+      border-radius: var(--radius-input);
+      overflow: hidden;
+      background: var(--color-surface);
+      transition: var(--transition-standard);
+    }
+    .ewa-suffix-wrap:focus-within {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-focus);
+    }
+    .ewa-suffix-wrap .ewa-input {
+      border: none;
+      border-radius: 0;
+      box-shadow: none !important;
+      flex: 1;
+      min-width: 0;
+    }
+    .ewa-suffix-wrap .ewa-input:focus {
+      box-shadow: none !important;
+    }
+    .ewa-input-suffix {
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-muted-text);
+      background: var(--color-subtle-bg);
+      border-left: 1px solid var(--color-divider);
+      white-space: nowrap;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    /* V6 hybrid rate: mode select + input */
+    .v6-rate-pair {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: stretch;
+    }
+    .v6-rate-pair .ewa-select-wrap {
+      flex: 0 0 128px;
+    }
+    .v6-rate-pair .ewa-suffix-wrap {
+      flex: 1;
+    }
+
+    /* Activity stats bar */
+    .v6-stats {
+      display: flex;
+      gap: var(--space-3xl);
+      padding: var(--space-lg) var(--space-lg) var(--space-sm);
+    }
+    .v6-stat__label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-muted-text);
+      margin-bottom: 3px;
+    }
+    .v6-stat__value {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--color-ink);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.2;
+    }
+    .v6-stat__value small {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-muted-text);
+      margin-left: 2px;
+    }
+
+    /* Employee status cell */
+    .v6-emp-status {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      justify-content: flex-end;
+    }
+    .v6-emp-status__text {
+      font-size: 13px;
+      color: var(--color-muted-text);
+      min-width: 48px;
+      text-align: right;
+    }
+    .v6-emp-status__text.is-disabled {
+      color: var(--color-placeholder);
+    }
+
+    /* Export button row */
+    .v6-export-row {
+      padding: var(--space-sm) var(--space-lg) var(--space-md);
+      border-top: 1px solid var(--color-divider);
+    }
+
+    /* Modal date fields */
+    .v6-modal-dates {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .v6-modal-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    /* Disabled field feedback */
+    [data-v6-fee-dep][data-disabled="true"] {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* Panels container */
+    .v6-panels {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+      min-width: 0;
+    }
+
+    /* Settings body spacing */
+    .v6-settings-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+  </style>
+</head>
+<body>
+
+<div class="bo-shell">
+
+  <!-- ══ TOPBAR ════════════════════════════════════════════ -->
+  <header class="bo-topbar" role="banner">
+    <div class="bo-topbar__brand">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="#6e37cc"/>
+          <path d="M10 10h7a5 5 0 0 1 0 10h-3v4h-4V10zm4 3v4h3a2 2 0 1 0 0-4h-3z" fill="#ffffff"/>
+        </svg>
+        <span class="bo-topbar__logo-text">DoPay</span>
+      </a>
+      <span class="bo-topbar__sep" aria-hidden="true"></span>
+      <span class="bo-topbar__org">Enterprise Portal</span>
+    </div>
+    <div class="bo-topbar__right">
+      <span class="bo-topbar__env-pill">Enterprise</span>
+      <div class="bo-topbar__user" role="button" tabindex="0" aria-label="User menu">
+        <div class="bo-topbar__avatar" aria-hidden="true">SA</div>
+        <span class="bo-topbar__username">Sayed A.</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ SUB-HEADER ════════════════════════════════════════ -->
+  <div class="bo-header">
+    <div class="bo-header__inner">
+      <div class="bo-header__top">
+        <nav class="bo-breadcrumb" aria-label="Breadcrumb">
+          <a href="../index.html" class="bo-breadcrumb__item">Home</a>
+          <span class="bo-breadcrumb__sep" aria-hidden="true">›</span>
+          <a href="../companies.html" class="bo-breadcrumb__item">Companies</a>
+          <span class="bo-breadcrumb__sep" aria-hidden="true">›</span>
+          <span class="bo-breadcrumb__item bo-breadcrumb__item--active" aria-current="page">Acme Corp</span>
+        </nav>
+        <span class="badge badge-teal">Active</span>
+      </div>
+      <nav class="bo-tabs scroll-hidden" aria-label="Company sections">
+        <a href="info.html"                   class="bo-tab">Info</a>
+        <a href="contacts.html"               class="bo-tab">Company Contacts</a>
+        <a href="beneficiaries.html"          class="bo-tab">Beneficiaries</a>
+        <a href="payments.html"               class="bo-tab">Payments</a>
+        <a href="bank-accounts.html"          class="bo-tab">Bank Accounts</a>
+        <a href="locations.html"              class="bo-tab">Locations</a>
+        <a href="documents.html"              class="bo-tab">Documents</a>
+        <a href="notes.html"                  class="bo-tab">Notes</a>
+        <a href="beneficiary-imports.html"    class="bo-tab">Beneficiary Imports</a>
+        <a href="history.html"                class="bo-tab">History</a>
+        <a href="ewa.html"                    class="bo-tab is-active">EWA</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ══ MAIN ══════════════════════════════════════════════ -->
+  <main class="bo-main">
+    <div class="ewa-split-layout">
+
+      <!-- ── Sidebar nav ─────────────────────────────────── -->
+      <nav class="ewa-split-nav" aria-label="EWA sections">
+
+        <button class="ewa-split-nav__btn is-active" type="button" data-v6-nav="settings" aria-selected="true">
+          <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          EWA Settings
+          <span class="v6-status-chip" data-v6-chip data-state="disabled">Disabled</span>
+        </button>
+
+        <button class="ewa-split-nav__btn" type="button" data-v6-nav="activity" aria-selected="false">
+          <svg class="ewa-split-nav__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 11l3-4 3 2 3-5 3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Activity &amp; eligibility
+        </button>
+      </nav>
+
+      <!-- ── Right panels ────────────────────────────────── -->
+      <div class="v6-panels">
+
+        <!-- ════ SETTINGS PANEL ════════════════════════════ -->
+        <div data-v6-panel="settings">
+
+          <!-- Unsaved changes bar -->
+          <div class="ewa-unsaved-bar" data-v6-unsaved hidden>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 5v3.5M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            You have unsaved changes
+          </div>
+
+          <!-- Heading -->
+          <div class="v6-panel-heading">
+            <h2>EWA settings</h2>
+            <p>Configure how Acme Corp's employees access early pay.</p>
+          </div>
+
+          <!-- Master toggle card -->
+          <div class="ewa-card v6-master-card">
+            <div class="ewa-section" style="padding: var(--space-lg) var(--space-2xl);">
+              <div class="ewa-field">
+                <div class="ewa-field__label-group">
+                  <p class="ewa-field__label">Enable EWA for this company</p>
+                  <p class="ewa-field__help">Turn EarlyPay on first, then configure the settings below.</p>
+                </div>
+                <div class="v6-toggle-row">
+                  <label class="ewa-toggle" aria-label="Enable EWA">
+                    <input class="ewa-toggle__input" type="checkbox" data-v6-master>
+                    <span class="ewa-toggle__track"></span>
+                  </label>
+                  <span class="v6-toggle-row__text" data-v6-master-text>Disabled</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings body – hidden until master is ON -->
+          <div class="v6-settings-body" data-v6-settings-body hidden>
+            <div class="ewa-card">
+
+              <!-- ── Core ─────────────────────────────────── -->
+              <div class="ewa-section">
+                <p class="ewa-section__label">Core</p>
+                <h3 class="ewa-section__title">Earned Wage Access</h3>
+                <p class="ewa-section__desc">Decide if employee requests need internal approval before disbursement.</p>
+
+                <div class="ewa-field">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Require pre-approval</p>
+                    <p class="ewa-field__help">If on, every request must be approved by a DoPay admin before funds are released.</p>
+                  </div>
+                  <div class="v6-toggle-row">
+                    <label class="ewa-toggle is-on" aria-label="Require pre-approval">
+                      <input class="ewa-toggle__input" type="checkbox" data-v6-ctrl="preapproval" checked>
+                      <span class="ewa-toggle__track"></span>
+                    </label>
+                    <span class="v6-toggle-row__text" data-v6-state="preapproval">Required</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Fees ──────────────────────────────────── -->
+              <div class="ewa-section">
+                <p class="ewa-section__label">Fees</p>
+                <h3 class="ewa-section__title">Fee configuration</h3>
+                <p class="ewa-section__desc">Decide whether a fee is charged on each request, who pays it, and the rate that applies.</p>
+
+                <!-- Apply a fee -->
+                <div class="ewa-field">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Apply a fee</p>
+                    <p class="ewa-field__help">If off, no fee is charged on any EWA request from this company.</p>
+                  </div>
+                  <div class="v6-toggle-row">
+                    <label class="ewa-toggle is-on" aria-label="Apply a fee">
+                      <input class="ewa-toggle__input" type="checkbox" data-v6-ctrl="feeEnabled" checked>
+                      <span class="ewa-toggle__track"></span>
+                    </label>
+                    <span class="v6-toggle-row__text" data-v6-state="feeEnabled">Charging fee</span>
+                  </div>
+                </div>
+
+                <!-- Who pays the fee -->
+                <div class="ewa-field" data-v6-fee-dep data-disabled="false">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Who pays the fee?</p>
+                    <p class="ewa-field__help">Whether the fee is deducted from the employee's request or billed to the company.</p>
+                  </div>
+                  <div class="ewa-select-wrap">
+                    <select class="ewa-select" data-v6-field="feeMode">
+                      <option value="company">Company pays — added to invoice</option>
+                      <option value="employee">Employee pays — deducted from request</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Custom rate (V6 hybrid: percent or fixed) -->
+                <div class="ewa-field" data-v6-fee-dep data-disabled="false">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Custom rate</p>
+                    <p class="ewa-field__help">Override the default rate using either a percentage or a fixed amount.</p>
+                  </div>
+                  <div data-v6-override="customRate" data-default-value="2.50" data-default-display="2.50%">
+                    <div class="override-default" data-override-default>
+                      <div>
+                        <span class="override-default__label" data-override-label>Global default</span>
+                        <span class="override-default__value" data-override-value>2.50%</span>
+                      </div>
+                      <button class="btn-text" type="button" data-override-trigger>Override</button>
+                    </div>
+                    <div class="override-editor" data-override-editor hidden>
+                      <div class="override-editor__head">
+                        <span>Company override &middot; <span class="override-editor__global" data-override-global>global: 2.50%</span></span>
+                        <button class="btn-text" type="button" data-override-reset>Reset to default</button>
+                      </div>
+                      <div class="v6-rate-pair">
+                        <div class="ewa-select-wrap">
+                          <select class="ewa-select" data-v6-rate-mode>
+                            <option value="percent">Percent</option>
+                            <option value="fixed">Fixed amount</option>
+                          </select>
+                        </div>
+                        <div class="ewa-suffix-wrap">
+                          <input class="ewa-input" type="number" step="0.01" min="0" value="2.50" data-v6-field="customRate">
+                          <span class="ewa-input-suffix" data-v6-rate-suffix>%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VAT -->
+                <div class="ewa-field" data-v6-fee-dep data-disabled="false">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">VAT</p>
+                    <p class="ewa-field__help">Tax applied on top of the fee. Egypt's standard rate is 14%.</p>
+                  </div>
+                  <div class="ewa-suffix-wrap" style="max-width:140px;">
+                    <input class="ewa-input" type="number" step="1" min="0" max="100" value="14" data-v6-field="vat">
+                    <span class="ewa-input-suffix">%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Limits ─────────────────────────────────── -->
+              <div class="ewa-section">
+                <p class="ewa-section__label">Limits</p>
+                <h3 class="ewa-section__title">Financial limits</h3>
+                <p class="ewa-section__desc">Override the platform-wide caps with values that suit this company's payroll policy.</p>
+
+                <!-- Maximum cap — V6: amount-based (EGP, not %) -->
+                <div class="ewa-field">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Maximum cap</p>
+                    <p class="ewa-field__help">The highest amount an employee can request in a single cycle.</p>
+                  </div>
+                  <div data-v6-override="maxCap" data-default-value="50" data-default-display="50% of net salary">
+                    <div class="override-default" data-override-default>
+                      <div>
+                        <span class="override-default__label" data-override-label>Global default</span>
+                        <span class="override-default__value" data-override-value>50% of net salary</span>
+                      </div>
+                      <button class="btn-text" type="button" data-override-trigger>Override</button>
+                    </div>
+                    <div class="override-editor" data-override-editor hidden>
+                      <div class="override-editor__head">
+                        <span>Company override &middot; <span class="override-editor__global" data-override-global>global: 50% of net salary</span></span>
+                        <button class="btn-text" type="button" data-override-reset>Reset to default</button>
+                      </div>
+                      <div class="v6-rate-pair">
+                        <div class="ewa-select-wrap">
+                          <select class="ewa-select" data-v6-cap-mode>
+                            <option value="percent">Percentage</option>
+                            <option value="fixed">Fixed amount</option>
+                          </select>
+                        </div>
+                        <div class="ewa-suffix-wrap">
+                          <input class="ewa-input" type="number" step="1" min="0" max="100" value="50" data-v6-field="maxCap">
+                          <span class="ewa-input-suffix" data-v6-cap-suffix>%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Minimum request -->
+                <div class="ewa-field">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Minimum request amount</p>
+                    <p class="ewa-field__help">Below this amount, employees won't be able to submit a request.</p>
+                  </div>
+                  <div data-v6-override="minRequest" data-default-value="500" data-default-display="500.00 EGP">
+                    <div class="override-default" data-override-default>
+                      <div>
+                        <span class="override-default__label" data-override-label>Global default</span>
+                        <span class="override-default__value" data-override-value>500.00 EGP</span>
+                      </div>
+                      <button class="btn-text" type="button" data-override-trigger>Override</button>
+                    </div>
+                    <div class="override-editor" data-override-editor hidden>
+                      <div class="override-editor__head">
+                        <span>Company override &middot; <span class="override-editor__global" data-override-global>global: 500.00 EGP</span></span>
+                        <button class="btn-text" type="button" data-override-reset>Reset to default</button>
+                      </div>
+                      <div class="ewa-suffix-wrap">
+                        <input class="ewa-input" type="number" step="50" min="0" value="500" data-v6-field="minRequest">
+                        <span class="ewa-input-suffix">EGP</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Cycle ──────────────────────────────────── -->
+              <div class="ewa-section">
+                <p class="ewa-section__label">Cycle</p>
+                <h3 class="ewa-section__title">Payroll cycle &amp; timing</h3>
+                <p class="ewa-section__desc">Override the global payroll calendar if this company runs payroll on a different schedule.</p>
+
+                <!-- Payroll start date -->
+                <div class="ewa-field">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Payroll start date</p>
+                    <p class="ewa-field__help">Day of the month when the next payroll cycle begins.</p>
+                  </div>
+                  <div data-v6-override="payrollStart" data-default-value="1" data-default-display="1st of the month">
+                    <div class="override-default" data-override-default>
+                      <div>
+                        <span class="override-default__label" data-override-label>Global default</span>
+                        <span class="override-default__value" data-override-value>1st of the month</span>
+                      </div>
+                      <button class="btn-text" type="button" data-override-trigger>Override</button>
+                    </div>
+                    <div class="override-editor" data-override-editor hidden>
+                      <div class="override-editor__head">
+                        <span>Company override &middot; <span class="override-editor__global" data-override-global>global: 1st of the month</span></span>
+                        <button class="btn-text" type="button" data-override-reset>Reset to default</button>
+                      </div>
+                      <div class="ewa-select-wrap">
+                        <select class="ewa-select" data-v6-field="payrollStart"></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Last day to accept requests -->
+                <div class="ewa-field">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Last day to accept requests</p>
+                    <p class="ewa-field__help">Cutoff after which no new EWA requests are accepted in the current cycle.</p>
+                  </div>
+                  <div data-v6-override="lastDay" data-default-value="25" data-default-display="25th of the month">
+                    <div class="override-default" data-override-default>
+                      <div>
+                        <span class="override-default__label" data-override-label>Global default</span>
+                        <span class="override-default__value" data-override-value>25th of the month</span>
+                      </div>
+                      <button class="btn-text" type="button" data-override-trigger>Override</button>
+                    </div>
+                    <div class="override-editor" data-override-editor hidden>
+                      <div class="override-editor__head">
+                        <span>Company override &middot; <span class="override-editor__global" data-override-global>global: 25th of the month</span></span>
+                        <button class="btn-text" type="button" data-override-reset>Reset to default</button>
+                      </div>
+                      <div class="ewa-select-wrap">
+                        <select class="ewa-select" data-v6-field="lastDay"></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /ewa-card -->
+          </div><!-- /v6-settings-body -->
+
+          <!-- Action row -->
+          <div class="ewa-action-row" data-v6-actions hidden>
+            <button class="btn btn-ghost" type="button" data-v6-discard>Discard changes</button>
+            <button class="btn btn-primary" type="button" data-v6-save>Save settings</button>
+          </div>
+
+        </div><!-- /settings panel -->
+
+
+        <!-- ════ ACTIVITY PANEL ════════════════════════════ -->
+        <div data-v6-panel="activity" hidden>
+
+          <div class="v6-panel-heading">
+            <h2>Activity &amp; eligibility</h2>
+            <p>Review pay request activity and manage employee EWA access.</p>
+          </div>
+
+          <div class="ewa-card">
+
+            <!-- Subtabs -->
+            <div class="ewa-subtabs scroll-hidden" role="tablist" aria-label="Activity views">
+              <button class="ewa-subtabs__btn is-active" role="tab" type="button" data-v6-activity-tab="requests" aria-selected="true">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="2" y="3" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/>
+                  <path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+                Pay requests
+              </button>
+              <button class="ewa-subtabs__btn" role="tab" type="button" data-v6-activity-tab="employees" aria-selected="false">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <circle cx="6" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.4"/>
+                  <path d="M1 14c.4-2.5 2.4-4 5-4s4.6 1.5 5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  <path d="M11.5 8a2 2 0 1 0 0-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                  <path d="M14 14c-.3-1.8-1.4-3-3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+                Employees
+                <span class="ewa-subtabs__count" data-v6-emp-count>10/12</span>
+              </button>
+            </div>
+
+            <!-- ── Pay Requests panel ─────────────────────── -->
+            <div data-v6-activity-panel="requests">
+
+              <!-- Toolbar -->
+              <div class="ewa-toolbar">
+                <div class="ewa-toolbar__left">
+                  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--color-muted-text);">
+                    Show
+                    <div class="ewa-select-wrap">
+                      <select class="ewa-select ewa-select--sm" data-v6-req-limit style="width:70px;">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                      </select>
+                    </div>
+                    entries
+                  </label>
+                </div>
+                <div class="ewa-toolbar__right">
+                  <div class="ewa-pill-group" role="group" aria-label="Request filter">
+                    <button class="ewa-pill-group__btn is-active" type="button" data-v6-req-filter="current">Current</button>
+                    <button class="ewa-pill-group__btn" type="button" data-v6-req-filter="debt">Debt</button>
+                    <button class="ewa-pill-group__btn" type="button" data-v6-req-filter="settled">Settled</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Stats -->
+              <div class="v6-stats">
+                <div>
+                  <p class="v6-stat__label">Total disbursed</p>
+                  <p class="v6-stat__value" data-v6-total-disbursed>45,300.00 <small>EGP</small></p>
+                </div>
+                <div>
+                  <p class="v6-stat__label">Pay requests</p>
+                  <p class="v6-stat__value" data-v6-total-requests>7</p>
+                </div>
+              </div>
+
+              <!-- Requests table -->
+              <div class="ewa-table-wrap">
+                <table class="ewa-table" aria-label="Pay requests">
+                  <thead>
+                    <tr>
+                      <th>Employee</th>
+                      <th># of Early Pays</th>
+                      <th>EWA Disbursed (EGP)</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody data-v6-req-body>
+                    <tr data-v6-req-status="current">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">AH</div><span class="ewa-name-cell__primary">Ahmed Hassan</span></div></td>
+                      <td class="num">3</td><td class="num">12,000.00</td>
+                      <td><span class="badge badge-teal">Disbursed</span></td>
+                    </tr>
+                    <tr data-v6-req-status="current">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">OK</div><span class="ewa-name-cell__primary">Omar Khaled</span></div></td>
+                      <td class="num">2</td><td class="num">8,500.00</td>
+                      <td><span class="badge badge-teal">Disbursed</span></td>
+                    </tr>
+                    <tr data-v6-req-status="current">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">KM</div><span class="ewa-name-cell__primary">Karim Mostafa</span></div></td>
+                      <td class="num">1</td><td class="num">5,200.00</td>
+                      <td><span class="badge badge-purple">Pending</span></td>
+                    </tr>
+                    <tr data-v6-req-status="current">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">SA</div><span class="ewa-name-cell__primary">Salma Ahmed</span></div></td>
+                      <td class="num">2</td><td class="num">10,000.00</td>
+                      <td><span class="badge badge-teal">Disbursed</span></td>
+                    </tr>
+                    <tr data-v6-req-status="current">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">NS</div><span class="ewa-name-cell__primary">Nour Saeed</span></div></td>
+                      <td class="num">1</td><td class="num">3,000.00</td>
+                      <td><span class="badge badge-purple">Pending</span></td>
+                    </tr>
+                    <tr data-v6-req-status="current">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">DF</div><span class="ewa-name-cell__primary">Dina Fawzi</span></div></td>
+                      <td class="num">1</td><td class="num">4,800.00</td>
+                      <td><span class="badge badge-teal">Disbursed</span></td>
+                    </tr>
+                    <tr data-v6-req-status="current">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">LM</div><span class="ewa-name-cell__primary">Layla Mahmoud</span></div></td>
+                      <td class="num">1</td><td class="num">1,800.00</td>
+                      <td><span class="badge badge-teal">Disbursed</span></td>
+                    </tr>
+                    <tr data-v6-req-status="debt">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">MA</div><span class="ewa-name-cell__primary">Mostafa Aly</span></div></td>
+                      <td class="num">2</td><td class="num">6,200.00</td>
+                      <td><span class="badge badge-purple">Pending</span></td>
+                    </tr>
+                    <tr data-v6-req-status="debt">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">MI</div><span class="ewa-name-cell__primary">Mariam Ibrahim</span></div></td>
+                      <td class="num">1</td><td class="num">4,000.00</td>
+                      <td><span class="badge badge-purple">Pending</span></td>
+                    </tr>
+                    <tr data-v6-req-status="settled">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">YA</div><span class="ewa-name-cell__primary">Yasmin Adel</span></div></td>
+                      <td class="num">1</td><td class="num">2,100.00</td>
+                      <td><span class="badge badge-teal">Disbursed</span></td>
+                    </tr>
+                    <tr data-v6-req-status="settled">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">HT</div><span class="ewa-name-cell__primary">Hassan Tarek</span></div></td>
+                      <td class="num">1</td><td class="num">3,700.00</td>
+                      <td><span class="badge badge-teal">Disbursed</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Empty state -->
+              <div style="padding:var(--space-3xl);text-align:center;color:var(--color-muted-text);font-size:14px;" data-v6-req-empty hidden>
+                No pay requests match the selected filter.
+              </div>
+
+              <!-- Table footer -->
+              <div class="ewa-table-footer" data-v6-req-footer>
+                <p class="ewa-table-footer__count" data-v6-req-count>Displaying 7 of 7 entries</p>
+                <nav class="ewa-pagination" aria-label="Requests pagination" data-pagination>
+                  <button class="ewa-pagination__arrow ewa-pagination__prev" type="button" aria-label="Previous page" disabled>‹</button>
+                  <button class="ewa-pagination__page is-active" type="button">1</button>
+                  <button class="ewa-pagination__arrow ewa-pagination__next" type="button" aria-label="Next page" disabled>›</button>
+                </nav>
+              </div>
+
+              <!-- Export row -->
+              <div class="v6-export-row">
+                <button class="btn btn-ghost btn-sm" type="button" data-v6-export-open>
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M8 2v8M8 10l2.5-2.5M8 10l-2.5-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  Export activated beneficiaries
+                </button>
+              </div>
+
+            </div><!-- /requests panel -->
+
+
+            <!-- ── Employees panel ────────────────────────── -->
+            <div data-v6-activity-panel="employees" hidden>
+
+              <!-- Toolbar -->
+              <div class="ewa-toolbar" style="flex-wrap:wrap;gap:var(--space-md);padding: var(--space-md) var(--space-lg);">
+                <div class="ewa-toolbar__left" style="flex-wrap:wrap;gap:var(--space-sm);">
+                  <div class="ewa-search" role="search">
+                    <svg class="ewa-search__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+                      <path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <input class="ewa-search__input" type="search" placeholder="Search by name, role or department…" data-v6-emp-search style="width:240px;">
+                  </div>
+                  <div class="ewa-select-wrap">
+                    <select class="ewa-select ewa-select--sm" data-v6-emp-filter aria-label="Filter employees">
+                      <option value="all">All employees</option>
+                      <option value="enabled">Enabled only</option>
+                      <option value="disabled">Disabled only</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="ewa-toolbar__right" style="flex-wrap:wrap;gap:var(--space-sm);">
+                  <span style="font-size:13px;color:var(--color-muted-text);" data-v6-emp-summary>10 of 12 enabled</span>
+                  <button class="btn btn-ghost btn-sm" type="button" data-v6-enable-filtered>Enable filtered</button>
+                  <button class="btn btn-ghost btn-sm" type="button" data-v6-disable-filtered>Disable filtered</button>
+                </div>
+              </div>
+
+              <!-- Employees table -->
+              <div class="ewa-table-wrap">
+                <table class="ewa-table" aria-label="Employees">
+                  <thead>
+                    <tr>
+                      <th>Employee</th>
+                      <th>Department</th>
+                      <th>Branch</th>
+                      <th>Net Salary (EGP)</th>
+                      <th>EWA used this cycle</th>
+                      <th style="text-align:right;">EWA</th>
+                    </tr>
+                  </thead>
+                  <tbody data-v6-emp-body>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Ahmed Hassan"  data-role="Senior Developer"      data-department="Engineering" data-branch="HQ Cairo">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">AH</div><div><p class="ewa-name-cell__primary">Ahmed Hassan</p><p class="ewa-name-cell__secondary">Senior Developer</p></div></div></td>
+                      <td>Engineering</td><td>HQ Cairo</td><td class="num">32,500.00</td><td class="num">12,000.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Ahmed Hassan"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Mariam Ibrahim" data-role="Product Manager"       data-department="Product"     data-branch="HQ Cairo">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">MI</div><div><p class="ewa-name-cell__primary">Mariam Ibrahim</p><p class="ewa-name-cell__secondary">Product Manager</p></div></div></td>
+                      <td>Product</td><td>HQ Cairo</td><td class="num">42,000.00</td><td class="num">0.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Mariam Ibrahim"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Omar Khaled"   data-role="Designer"              data-department="Product"     data-branch="HQ Cairo">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">OK</div><div><p class="ewa-name-cell__primary">Omar Khaled</p><p class="ewa-name-cell__secondary">Designer</p></div></div></td>
+                      <td>Product</td><td>HQ Cairo</td><td class="num">28,000.00</td><td class="num">8,500.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Omar Khaled"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="false" data-name="Yasmin Adel"   data-role="Data Analyst"           data-department="Analytics"   data-branch="Alexandria">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">YA</div><div><p class="ewa-name-cell__primary">Yasmin Adel</p><p class="ewa-name-cell__secondary">Data Analyst</p></div></div></td>
+                      <td>Analytics</td><td>Alexandria</td><td class="num">26,000.00</td><td class="num">0.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text is-disabled" data-v6-emp-state>Disabled</span><label class="ewa-toggle" aria-label="Toggle EWA for Yasmin Adel"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Karim Mostafa" data-role="Sales Lead"             data-department="Sales"       data-branch="Alexandria">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">KM</div><div><p class="ewa-name-cell__primary">Karim Mostafa</p><p class="ewa-name-cell__secondary">Sales Lead</p></div></div></td>
+                      <td>Sales</td><td>Alexandria</td><td class="num">35,000.00</td><td class="num">5,200.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Karim Mostafa"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Nour Saeed"    data-role="Junior Accountant"     data-department="Finance"     data-branch="HQ Cairo">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">NS</div><div><p class="ewa-name-cell__primary">Nour Saeed</p><p class="ewa-name-cell__secondary">Junior Accountant</p></div></div></td>
+                      <td>Finance</td><td>HQ Cairo</td><td class="num">18,000.00</td><td class="num">3,000.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Nour Saeed"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="false" data-name="Hassan Tarek"  data-role="Operations Specialist" data-department="Operations"  data-branch="Giza">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">HT</div><div><p class="ewa-name-cell__primary">Hassan Tarek</p><p class="ewa-name-cell__secondary">Operations Specialist</p></div></div></td>
+                      <td>Operations</td><td>Giza</td><td class="num">22,500.00</td><td class="num">0.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text is-disabled" data-v6-emp-state>Disabled</span><label class="ewa-toggle" aria-label="Toggle EWA for Hassan Tarek"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Layla Mahmoud" data-role="HR Coordinator"        data-department="People"      data-branch="HQ Cairo">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">LM</div><div><p class="ewa-name-cell__primary">Layla Mahmoud</p><p class="ewa-name-cell__secondary">HR Coordinator</p></div></div></td>
+                      <td>People</td><td>HQ Cairo</td><td class="num">24,000.00</td><td class="num">1,800.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Layla Mahmoud"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Tarek Wahid"   data-role="DevOps Engineer"       data-department="Engineering" data-branch="HQ Cairo">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">TW</div><div><p class="ewa-name-cell__primary">Tarek Wahid</p><p class="ewa-name-cell__secondary">DevOps Engineer</p></div></div></td>
+                      <td>Engineering</td><td>HQ Cairo</td><td class="num">38,000.00</td><td class="num">0.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Tarek Wahid"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Salma Ahmed"   data-role="Marketing Manager"     data-department="Marketing"   data-branch="HQ Cairo">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">SA</div><div><p class="ewa-name-cell__primary">Salma Ahmed</p><p class="ewa-name-cell__secondary">Marketing Manager</p></div></div></td>
+                      <td>Marketing</td><td>HQ Cairo</td><td class="num">33,000.00</td><td class="num">10,000.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Salma Ahmed"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Mostafa Aly"   data-role="Finance Director"      data-department="Finance"     data-branch="HQ Cairo">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">MA</div><div><p class="ewa-name-cell__primary">Mostafa Aly</p><p class="ewa-name-cell__secondary">Finance Director</p></div></div></td>
+                      <td>Finance</td><td>HQ Cairo</td><td class="num">55,000.00</td><td class="num">0.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Mostafa Aly"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                    <tr data-v6-emp-row data-enabled="true"  data-name="Dina Fawzi"    data-role="Customer Success"      data-department="CX"          data-branch="Giza">
+                      <td><div class="ewa-name-cell"><div class="ewa-avatar">DF</div><div><p class="ewa-name-cell__primary">Dina Fawzi</p><p class="ewa-name-cell__secondary">Customer Success</p></div></div></td>
+                      <td>CX</td><td>Giza</td><td class="num">21,000.00</td><td class="num">4,800.00 EGP</td>
+                      <td><div class="v6-emp-status"><span class="v6-emp-status__text" data-v6-emp-state>Enabled</span><label class="ewa-toggle is-on" aria-label="Toggle EWA for Dina Fawzi"><input class="ewa-toggle__input" type="checkbox" data-v6-emp-toggle checked><span class="ewa-toggle__track"></span></label></div></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Empty state -->
+              <div style="padding:var(--space-3xl);text-align:center;color:var(--color-muted-text);font-size:14px;" data-v6-emp-empty hidden>
+                No employees match the current filters.
+              </div>
+
+            </div><!-- /employees panel -->
+
+          </div><!-- /ewa-card -->
+        </div><!-- /activity panel -->
+
+      </div><!-- /v6-panels -->
+    </div><!-- /ewa-split-layout -->
+
+
+    <!-- ══ EXPORT MODAL ══════════════════════════════════════ -->
+    <div class="modal-backdrop" data-v6-export-modal hidden role="dialog" aria-modal="true" aria-labelledby="v6ExportTitle">
+      <div class="modal">
+        <div class="modal__header">
+          <h2 class="modal__title" id="v6ExportTitle">Export activated beneficiaries</h2>
+          <button class="modal__close" type="button" data-v6-export-close aria-label="Close">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="modal__body">
+          <p style="margin-bottom:var(--space-lg);">Choose a date range. The export includes every employee who used EWA at least once in the selected period.</p>
+          <div class="v6-modal-dates">
+            <div>
+              <label class="form-label" for="v6-export-from">From</label>
+              <input class="ewa-input" type="date" id="v6-export-from" data-v6-export-from>
+            </div>
+            <div>
+              <label class="form-label" for="v6-export-to">To</label>
+              <input class="ewa-input" type="date" id="v6-export-to" data-v6-export-to>
+            </div>
+          </div>
+          <div class="v6-modal-presets">
+            <button class="btn btn-ghost btn-sm" type="button" data-v6-export-preset="30d">Last 30 days</button>
+            <button class="btn btn-ghost btn-sm" type="button" data-v6-export-preset="month">This month</button>
+            <button class="btn btn-ghost btn-sm" type="button" data-v6-export-preset="last-month">Last month</button>
+            <button class="btn btn-ghost btn-sm" type="button" data-v6-export-preset="ytd">Year to date</button>
+          </div>
+        </div>
+        <div class="modal__footer">
+          <button class="btn btn-ghost" type="button" data-v6-export-close>Cancel</button>
+          <button class="btn btn-primary" type="button" data-v6-export-confirm disabled>Export CSV</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div><!-- /bo-shell -->
+
+
+<script src="../js/toggle.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── Helpers ──────────────────────────────────────────── */
+
+  function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+  function qsa(sel, ctx) { return Array.from((ctx || document).querySelectorAll(sel)); }
+
+  function dayLabel(n) {
+    n = Number(n);
+    var s = ['th','st','nd','rd'];
+    var v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]) + ' of the month';
+  }
+
+  function formatEGP(v) {
+    return Number(v || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' EGP';
+  }
+
+  function isoDate(d) {
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+
+  function populateDaySelect(sel, defaultVal) {
+    sel.innerHTML = Array.from({ length: 31 }, function (_, i) {
+      var d = i + 1;
+      return '<option value="' + d + '">' + dayLabel(d) + '</option>';
+    }).join('');
+    sel.value = String(defaultVal);
+  }
+
+  /* ── Panel nav ────────────────────────────────────────── */
+
+  var navBtns   = qsa('[data-v6-nav]');
+  var panels    = qsa('[data-v6-panel]');
+
+  function setPanel(name) {
+    navBtns.forEach(function (btn) {
+      var active = btn.dataset.v6Nav === name;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-selected', active);
+    });
+    panels.forEach(function (panel) {
+      panel.hidden = panel.dataset.v6Panel !== name;
+    });
+  }
+
+  navBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () { setPanel(btn.dataset.v6Nav); });
+  });
+
+  /* ── Toggle helpers ───────────────────────────────────── */
+
+  function isOn(checkbox) { return checkbox.checked; }
+
+  function syncToggleWrapper(checkbox) {
+    var wrapper = checkbox.closest('.ewa-toggle');
+    if (wrapper) wrapper.classList.toggle('is-on', checkbox.checked);
+  }
+
+  /* ── Master toggle ────────────────────────────────────── */
+
+  var masterCb    = qs('[data-v6-master]');
+  var masterText  = qs('[data-v6-master-text]');
+  var chip        = qs('[data-v6-chip]');
+  var settingsBody = qs('[data-v6-settings-body]');
+
+  function syncMaster() {
+    var on = isOn(masterCb);
+    syncToggleWrapper(masterCb);
+    masterText.textContent = on ? 'Enabled' : 'Disabled';
+    chip.textContent       = on ? 'Enabled' : 'Disabled';
+    chip.dataset.state     = on ? 'enabled' : 'disabled';
+    settingsBody.hidden    = !on;
+    syncDirty();
+  }
+
+  masterCb.addEventListener('change', syncMaster);
+
+  /* ── Setting toggles (pre-approval, fee) ─────────────── */
+
+  var preapprovalCb = qs('[data-v6-ctrl="preapproval"]');
+  var feeEnabledCb  = qs('[data-v6-ctrl="feeEnabled"]');
+  var preapprovalState = qs('[data-v6-state="preapproval"]');
+  var feeEnabledState  = qs('[data-v6-state="feeEnabled"]');
+  var feeDeps = qsa('[data-v6-fee-dep]');
+
+  function syncPreapproval() {
+    syncToggleWrapper(preapprovalCb);
+    preapprovalState.textContent = isOn(preapprovalCb) ? 'Required' : 'Not required';
+    syncDirty();
+  }
+
+  function syncFeeEnabled() {
+    syncToggleWrapper(feeEnabledCb);
+    feeEnabledState.textContent = isOn(feeEnabledCb) ? 'Charging fee' : 'No fee';
+    var disabled = !isOn(feeEnabledCb);
+    feeDeps.forEach(function (el) { el.dataset.disabled = disabled ? 'true' : 'false'; });
+    syncDirty();
+  }
+
+  preapprovalCb.addEventListener('change', syncPreapproval);
+  feeEnabledCb.addEventListener('change', syncFeeEnabled);
+
+  /* ── Override components ──────────────────────────────── */
+
+  var overrides = qsa('[data-v6-override]');
+
+  function isOverrideOpen(wrap) {
+    return !qs('[data-override-editor]', wrap).hidden;
+  }
+
+  function isOverrideApplied(wrap) {
+    return wrap.dataset.applied === 'true';
+  }
+
+  function getOverrideDisplayValue(wrap) {
+    var key  = wrap.dataset.v6Override;
+    var field = qs('[data-v6-field="' + key + '"]', wrap);
+    if (!field) return wrap.dataset.defaultDisplay || '';
+    var val  = field.value;
+    if (key === 'customRate') {
+      var mode = qs('[data-v6-rate-mode]', wrap);
+      return mode && mode.value === 'fixed' ? formatEGP(val) : val + '%';
+    }
+    if (key === 'maxCap') {
+      var capMode = qs('[data-v6-cap-mode]', wrap);
+      return capMode && capMode.value === 'fixed' ? formatEGP(val) : val + '%';
+    }
+    if (key === 'minRequest')   return formatEGP(val);
+    if (key === 'payrollStart' || key === 'lastDay') return dayLabel(val);
+    return val;
+  }
+
+  function syncOverrideDefaultCard(wrap) {
+    var defaultCard  = qs('[data-override-default]', wrap);
+    var labelEl      = qs('[data-override-label]', wrap);
+    var valueEl      = qs('[data-override-value]', wrap);
+    var triggerBtn   = qs('[data-override-trigger]', wrap);
+    var applied      = isOverrideApplied(wrap);
+
+    defaultCard.classList.toggle('is-overridden', applied);
+    labelEl.textContent  = applied ? 'Company override' : 'Global default';
+    valueEl.textContent  = applied ? getOverrideDisplayValue(wrap) : (wrap.dataset.defaultDisplay || wrap.dataset.defaultValue);
+    if (triggerBtn) triggerBtn.textContent = applied ? 'Edit' : 'Override';
+  }
+
+  function openOverride(wrap) {
+    qs('[data-override-default]', wrap).hidden = true;
+    qs('[data-override-editor]', wrap).hidden  = false;
+  }
+
+  function closeOverride(wrap) {
+    qs('[data-override-default]', wrap).hidden = false;
+    qs('[data-override-editor]', wrap).hidden  = true;
+  }
+
+  function resetOverride(wrap) {
+    var key     = wrap.dataset.v6Override;
+    var field   = qs('[data-v6-field="' + key + '"]', wrap);
+    var defVal  = wrap.dataset.defaultValue;
+    if (field) field.value = defVal;
+    var mode = qs('[data-v6-rate-mode]', wrap);
+    if (mode) { mode.value = 'percent'; syncV6RateSuffix(); }
+    var capMode = qs('[data-v6-cap-mode]', wrap);
+    if (capMode) { capMode.value = 'percent'; syncCapSuffix(); }
+    wrap.dataset.applied = 'false';
+    closeOverride(wrap);
+    syncOverrideDefaultCard(wrap);
+    syncDirty();
+  }
+
+  overrides.forEach(function (wrap) {
+    var trigger = qs('[data-override-trigger]', wrap);
+    var reset   = qs('[data-override-reset]', wrap);
+    var key     = wrap.dataset.v6Override;
+    var field   = qs('[data-v6-field="' + key + '"]', wrap);
+    var globalEl = qs('[data-override-global]', wrap);
+
+    // Populate day selects
+    if ((key === 'payrollStart' || key === 'lastDay') && field && field.tagName === 'SELECT') {
+      populateDaySelect(field, wrap.dataset.defaultValue);
+    }
+
+    // Update global label in editor
+    if (globalEl) globalEl.textContent = 'global: ' + (wrap.dataset.defaultDisplay || wrap.dataset.defaultValue);
+
+    if (trigger) {
+      trigger.addEventListener('click', function () {
+        openOverride(wrap);
+      });
+    }
+
+    if (reset) {
+      reset.addEventListener('click', function () {
+        resetOverride(wrap);
+      });
+    }
+
+    if (field) {
+      field.addEventListener('input', function () { syncDirty(); });
+      field.addEventListener('change', function () { syncDirty(); });
+    }
+  });
+
+  /* ── V6 hybrid rate mode (custom rate) ───────────────── */
+
+  var rateModeSelect = qs('[data-v6-rate-mode]');
+  var rateSuffix     = qs('[data-v6-rate-suffix]');
+
+  function syncV6RateSuffix() {
+    if (!rateModeSelect || !rateSuffix) return;
+    rateSuffix.textContent = rateModeSelect.value === 'fixed' ? 'EGP' : '%';
+  }
+
+  if (rateModeSelect) {
+    rateModeSelect.addEventListener('change', function () {
+      syncV6RateSuffix();
+      syncDirty();
+    });
+  }
+
+  /* ── V6 hybrid cap mode (max cap) ─────────────────────── */
+
+  var capModeSelect = qs('[data-v6-cap-mode]');
+
+  function syncCapSuffix() {
+    if (!capModeSelect) return;
+    var suffix = qs('[data-v6-cap-suffix]');
+    if (suffix) suffix.textContent = capModeSelect.value === 'fixed' ? 'EGP' : '%';
+    var capField = qs('[data-v6-field="maxCap"]');
+    if (capField) {
+      if (capModeSelect.value === 'fixed') {
+        capField.setAttribute('step', '100');
+        capField.removeAttribute('max');
+      } else {
+        capField.setAttribute('step', '1');
+        capField.setAttribute('max', '100');
+      }
+    }
+  }
+
+  if (capModeSelect) {
+    capModeSelect.addEventListener('change', function () {
+      syncCapSuffix();
+      syncDirty();
+    });
+  }
+
+  /* ── Dirty state tracking ─────────────────────────────── */
+
+  var unsavedBar = qs('[data-v6-unsaved]');
+  var actionsRow = qs('[data-v6-actions]');
+  var committedState = null;
+
+  function currentState() {
+    var state = {
+      master:       isOn(masterCb),
+      preapproval:  isOn(preapprovalCb),
+      feeEnabled:   isOn(feeEnabledCb),
+      feeMode:      qs('[data-v6-field="feeMode"]').value,
+      customRate:   qs('[data-v6-field="customRate"]').value,
+      rateMode:     rateModeSelect ? rateModeSelect.value : 'percent',
+      capMode:      capModeSelect  ? capModeSelect.value  : 'percent',
+      vat:          qs('[data-v6-field="vat"]').value,
+      maxCap:       qs('[data-v6-field="maxCap"]').value,
+      minRequest:   qs('[data-v6-field="minRequest"]').value,
+      payrollStart: qs('[data-v6-field="payrollStart"]').value,
+      lastDay:      qs('[data-v6-field="lastDay"]').value,
+    };
+    overrides.forEach(function (wrap) {
+      state['applied_' + wrap.dataset.v6Override] = wrap.dataset.applied;
+    });
+    return state;
+  }
+
+  function syncDirty() {
+    if (!committedState) return;
+    var dirty = JSON.stringify(currentState()) !== JSON.stringify(committedState);
+    unsavedBar.hidden = !dirty;
+    actionsRow.hidden = !dirty;
+  }
+
+  function commitState() {
+    committedState = JSON.parse(JSON.stringify(currentState()));
+    unsavedBar.hidden = true;
+    actionsRow.hidden = true;
+  }
+
+  /* ── Track changes on all setting inputs ─────────────── */
+
+  qsa('[data-v6-field]').forEach(function (field) {
+    field.addEventListener('input',  syncDirty);
+    field.addEventListener('change', syncDirty);
+  });
+
+  /* ── Save ─────────────────────────────────────────────── */
+
+  qs('[data-v6-save]').addEventListener('click', function () {
+    // Mark overrides as applied if value differs from default
+    overrides.forEach(function (wrap) {
+      var key   = wrap.dataset.v6Override;
+      var field = qs('[data-v6-field="' + key + '"]', wrap);
+      if (!field) return;
+      var valueChanged = field.value !== wrap.dataset.defaultValue;
+      var modeEl = qs('[data-v6-rate-mode]', wrap) || qs('[data-v6-cap-mode]', wrap);
+      var modeChanged = modeEl ? modeEl.value !== 'percent' : false;
+      wrap.dataset.applied = (valueChanged || modeChanged) ? 'true' : 'false';
+      closeOverride(wrap);
+      syncOverrideDefaultCard(wrap);
+    });
+    commitState();
+  });
+
+  /* ── Discard ──────────────────────────────────────────── */
+
+  qs('[data-v6-discard]').addEventListener('click', function () {
+    if (!committedState) return;
+    // Restore toggles
+    masterCb.checked      = committedState.master;
+    preapprovalCb.checked = committedState.preapproval;
+    feeEnabledCb.checked  = committedState.feeEnabled;
+    // Restore fields
+    qs('[data-v6-field="feeMode"]').value      = committedState.feeMode;
+    qs('[data-v6-field="customRate"]').value   = committedState.customRate;
+    qs('[data-v6-field="vat"]').value          = committedState.vat;
+    qs('[data-v6-field="maxCap"]').value       = committedState.maxCap;
+    qs('[data-v6-field="minRequest"]').value   = committedState.minRequest;
+    qs('[data-v6-field="payrollStart"]').value = committedState.payrollStart;
+    qs('[data-v6-field="lastDay"]').value      = committedState.lastDay;
+    if (rateModeSelect) rateModeSelect.value = committedState.rateMode;
+    if (capModeSelect)  capModeSelect.value  = committedState.capMode;
+    // Restore override applied states and close editors
+    overrides.forEach(function (wrap) {
+      wrap.dataset.applied = committedState['applied_' + wrap.dataset.v6Override] || 'false';
+      closeOverride(wrap);
+      syncOverrideDefaultCard(wrap);
+    });
+    syncV6RateSuffix();
+    syncCapSuffix();
+    syncMaster();
+    syncPreapproval();
+    syncFeeEnabled();
+    unsavedBar.hidden = true;
+    actionsRow.hidden = true;
+  });
+
+  /* ── Activity subtabs ─────────────────────────────────── */
+
+  var activityTabs   = qsa('[data-v6-activity-tab]');
+  var activityPanels = qsa('[data-v6-activity-panel]');
+
+  function setActivityTab(name) {
+    activityTabs.forEach(function (btn) {
+      var active = btn.dataset.v6ActivityTab === name;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-selected', active);
+    });
+    activityPanels.forEach(function (panel) {
+      panel.hidden = panel.dataset.v6ActivityPanel !== name;
+    });
+  }
+
+  activityTabs.forEach(function (btn) {
+    btn.addEventListener('click', function () { setActivityTab(btn.dataset.v6ActivityTab); });
+  });
+
+  /* ── Pay request filter ───────────────────────────────── */
+
+  var reqFilterBtns = qsa('[data-v6-req-filter]');
+  var reqRows       = qsa('[data-v6-req-status]');
+  var reqLimitSel   = qs('[data-v6-req-limit]');
+  var reqCountEl    = qs('[data-v6-req-count]');
+  var reqFooter     = qs('[data-v6-req-footer]');
+  var reqEmpty      = qs('[data-v6-req-empty]');
+  var totalDisbEl   = qs('[data-v6-total-disbursed]');
+  var totalReqEl    = qs('[data-v6-total-requests]');
+  var activeFilter  = 'current';
+
+  function syncRequestRows() {
+    var limit    = reqLimitSel ? Number(reqLimitSel.value) : 10;
+    var shown    = 0;
+    var matching = 0;
+    var disbTotal = 0;
+
+    reqRows.forEach(function (row) {
+      var match = row.dataset.v6ReqStatus === activeFilter;
+      if (match) {
+        matching++;
+        var cell = row.cells[2];
+        disbTotal += parseFloat((cell ? cell.textContent : '0').replace(/,/g, '')) || 0;
+      }
+      var show  = match && shown < limit;
+      row.hidden = !show;
+      if (show) shown++;
+    });
+
+    if (reqEmpty)  reqEmpty.hidden  = matching > 0;
+    if (reqFooter) reqFooter.hidden = matching === 0;
+    if (reqCountEl) reqCountEl.textContent = 'Displaying ' + shown + ' of ' + matching + ' entries';
+    if (totalReqEl) totalReqEl.textContent = String(matching);
+    if (totalDisbEl) totalDisbEl.innerHTML =
+      disbTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' <small>EGP</small>';
+  }
+
+  reqFilterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      activeFilter = btn.dataset.v6ReqFilter;
+      reqFilterBtns.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+      syncRequestRows();
+    });
+  });
+
+  if (reqLimitSel) reqLimitSel.addEventListener('change', syncRequestRows);
+
+  /* ── Employee table ───────────────────────────────────── */
+
+  var empRows        = qsa('[data-v6-emp-row]');
+  var empSearch      = qs('[data-v6-emp-search]');
+  var empFilter      = qs('[data-v6-emp-filter]');
+  var empSummary     = qs('[data-v6-emp-summary]');
+  var empCount       = qs('[data-v6-emp-count]');
+  var empEmpty       = qs('[data-v6-emp-empty]');
+  var enableFilBtn   = qs('[data-v6-enable-filtered]');
+  var disableFilBtn  = qs('[data-v6-disable-filtered]');
+
+  function syncEmpRow(row) {
+    var enabled = row.dataset.enabled === 'true';
+    var cb      = qs('[data-v6-emp-toggle]', row);
+    var label   = qs('[data-v6-emp-state]', row);
+    var wrapper = cb ? cb.closest('.ewa-toggle') : null;
+    if (cb)      cb.checked = enabled;
+    if (wrapper) wrapper.classList.toggle('is-on', enabled);
+    if (label) {
+      label.textContent = enabled ? 'Enabled' : 'Disabled';
+      label.classList.toggle('is-disabled', !enabled);
+    }
+  }
+
+  function syncEmployees() {
+    var query     = empSearch  ? empSearch.value.trim().toLowerCase()  : '';
+    var filterVal = empFilter  ? empFilter.value                       : 'all';
+    var visible   = 0;
+    var enabled   = 0;
+
+    empRows.forEach(function (row) {
+      syncEmpRow(row);
+      var haystack = [row.dataset.name, row.dataset.role, row.dataset.department, row.dataset.branch].join(' ').toLowerCase();
+      var matchSearch = !query || haystack.includes(query);
+      var isEnabled   = row.dataset.enabled === 'true';
+      var matchFilter = filterVal === 'all' || (filterVal === 'enabled' && isEnabled) || (filterVal === 'disabled' && !isEnabled);
+      var show = matchSearch && matchFilter;
+      row.hidden = !show;
+      if (show) { visible++; if (isEnabled) enabled++; }
+    });
+
+    if (empEmpty)   empEmpty.hidden   = visible > 0;
+    if (empSummary) empSummary.textContent = enabled + ' of ' + visible + ' enabled';
+    if (empCount)   empCount.textContent   = enabled + '/' + visible;
+    if (enableFilBtn)  enableFilBtn.disabled  = visible === 0;
+    if (disableFilBtn) disableFilBtn.disabled = visible === 0;
+  }
+
+  empRows.forEach(function (row) {
+    var cb = qs('[data-v6-emp-toggle]', row);
+    if (cb) {
+      cb.addEventListener('change', function () {
+        row.dataset.enabled = cb.checked ? 'true' : 'false';
+        syncEmployees();
+      });
+    }
+  });
+
+  if (empSearch) empSearch.addEventListener('input',  syncEmployees);
+  if (empFilter) empFilter.addEventListener('change', syncEmployees);
+
+  if (enableFilBtn) {
+    enableFilBtn.addEventListener('click', function () {
+      empRows.forEach(function (row) { if (!row.hidden) row.dataset.enabled = 'true'; });
+      syncEmployees();
+    });
+  }
+
+  if (disableFilBtn) {
+    disableFilBtn.addEventListener('click', function () {
+      empRows.forEach(function (row) { if (!row.hidden) row.dataset.enabled = 'false'; });
+      syncEmployees();
+    });
+  }
+
+  /* ── Export modal ─────────────────────────────────────── */
+
+  var exportModal   = qs('[data-v6-export-modal]');
+  var exportFrom    = qs('[data-v6-export-from]');
+  var exportTo      = qs('[data-v6-export-to]');
+  var exportConfirm = qs('[data-v6-export-confirm]');
+
+  function openExportModal()  { exportModal.hidden = false; document.body.style.overflow = 'hidden'; }
+  function closeExportModal() { exportModal.hidden = true;  document.body.style.overflow = ''; }
+
+  function syncExportConfirm() {
+    if (!exportConfirm) return;
+    var validRange = !!exportFrom.value && !!exportTo.value && exportFrom.value <= exportTo.value;
+    exportConfirm.disabled = !validRange;
+  }
+
+  function applyExportPreset(preset) {
+    var today = new Date();
+    var from  = new Date(today);
+    var to    = new Date(today);
+    if (preset === '30d')        { from.setDate(today.getDate() - 29); }
+    else if (preset === 'month') { from = new Date(today.getFullYear(), today.getMonth(), 1); }
+    else if (preset === 'last-month') {
+      from = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+      to   = new Date(today.getFullYear(), today.getMonth(), 0);
+    }
+    else if (preset === 'ytd')   { from = new Date(today.getFullYear(), 0, 1); }
+    exportFrom.value = isoDate(from);
+    exportTo.value   = isoDate(to);
+    syncExportConfirm();
+  }
+
+  qs('[data-v6-export-open]').addEventListener('click', openExportModal);
+
+  qsa('[data-v6-export-close]').forEach(function (btn) {
+    btn.addEventListener('click', closeExportModal);
+  });
+
+  exportModal.addEventListener('click', function (e) {
+    if (e.target === exportModal) closeExportModal();
+  });
+
+  qsa('[data-v6-export-preset]').forEach(function (btn) {
+    btn.addEventListener('click', function () { applyExportPreset(btn.dataset.v6ExportPreset); });
+  });
+
+  if (exportFrom) exportFrom.addEventListener('change', syncExportConfirm);
+  if (exportTo)   exportTo.addEventListener('change',   syncExportConfirm);
+
+  if (exportConfirm) {
+    exportConfirm.addEventListener('click', function () {
+      if (exportConfirm.disabled) return;
+      // Build CSV
+      var headers = ['Employee', 'Role', 'Department', 'Branch', 'Net Salary (EGP)', 'EWA Used This Cycle', 'EWA Status', 'From', 'To'];
+      var csvRows = [headers.join(',')];
+      empRows.forEach(function (row) {
+        if (row.dataset.enabled !== 'true') return;
+        var cells = row.querySelectorAll('td');
+        var cols  = [
+          '"' + (row.dataset.name   || '') + '"',
+          '"' + (row.dataset.role   || '') + '"',
+          '"' + (cells[1] ? cells[1].textContent.trim() : '') + '"',
+          '"' + (cells[2] ? cells[2].textContent.trim() : '') + '"',
+          '"' + (cells[3] ? cells[3].textContent.trim() : '') + '"',
+          '"' + (cells[4] ? cells[4].textContent.trim() : '') + '"',
+          '"Enabled"',
+          '"' + exportFrom.value + '"',
+          '"' + exportTo.value   + '"',
+        ];
+        csvRows.push(cols.join(','));
+      });
+      var blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      var url  = URL.createObjectURL(blob);
+      var a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'activated-beneficiaries.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      closeExportModal();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !exportModal.hidden) closeExportModal();
+  });
+
+  /* ── Init ─────────────────────────────────────────────── */
+
+  syncMaster();
+  syncPreapproval();
+  syncFeeEnabled();
+  syncV6RateSuffix();
+  syncCapSuffix();
+  overrides.forEach(syncOverrideDefaultCard);
+  setPanel('settings');
+  setActivityTab('requests');
+  syncRequestRows();
+  syncEmployees();
+  commitState();
+
+})();
+</script>
+
+</body>
+</html>
