@@ -347,6 +347,14 @@
   cursor: not-allowed;
 }
 
+.ewa-input[readonly] {
+  border-color: var(--color-divider);
+  background: var(--color-subtle-bg);
+  color: var(--color-disabled);
+  cursor: default;
+  pointer-events: none;
+}
+
 /* Select with custom chevron */
 .ewa-select-wrap {
   position: relative;

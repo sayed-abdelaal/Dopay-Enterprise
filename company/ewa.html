@@ -282,7 +282,10 @@
         <span class="bo-topbar__logo-text">DoPay</span>
       </a>
       <span class="bo-topbar__sep" aria-hidden="true"></span>
-      <span class="bo-topbar__org">Enterprise Portal</span>
+      <nav class="bo-topbar__nav" aria-label="Main navigation">
+        <a href="../companies.html" class="bo-topbar__nav-link is-active">Companies</a>
+        <a href="../settings/ewa.html" class="bo-topbar__nav-link">Global Settings</a>
+      </nav>
     </div>
     <div class="bo-topbar__right">
       <span class="bo-topbar__env-pill">Enterprise top navigation</span>
@@ -488,7 +491,7 @@
                     <p class="ewa-field__help">Tax applied on top of the fee. Egypt's standard rate is 14%.</p>
                   </div>
                   <div class="ewa-suffix-wrap" style="max-width:140px;">
-                    <input class="ewa-input" type="number" step="1" min="0" max="100" value="14" data-v6-field="vat">
+                    <input class="ewa-input" type="number" step="1" min="0" max="100" value="14" data-v6-field="vat" readonly>
                     <span class="ewa-input-suffix">%</span>
                   </div>
                 </div>
