@@ -265,9 +265,219 @@
       margin-top: var(--space-lg);
       margin-bottom: var(--space-xl);
     }
+    /* ── Approvers multi-select ──────────────────────────── */
+    .approvers-field {
+      display: none;
+      grid-column: 1 / -1;
+      grid-template-columns: 1fr;
+      margin-top: -4px;
+      padding-top: 0;
+    }
+    .approvers-field.is-visible {
+      display: grid;
+    }
+    .approver-select {
+      position: relative;
+      width: 100%;
+    }
+    .approver-select.is-error .approver-select__control {
+      border-color: var(--color-danger, #d92d20);
+      box-shadow: 0 0 0 3px rgba(217, 45, 32, 0.12);
+    }
+    .approver-select__control {
+      display: flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 4px 10px 4px 8px;
+      border: 1px solid var(--color-input-border);
+      border-radius: var(--radius-input);
+      background: var(--color-surface);
+      cursor: text;
+      gap: 6px;
+      flex-wrap: wrap;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+    .approver-select__control:focus-within {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-focus);
+      outline: 0;
+    }
+    .approver-select__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      flex: 1;
+      min-width: 0;
+    }
+    .approver-select__chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .approver-select__chip-remove {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border: 0;
+      background: none;
+      color: var(--color-primary);
+      cursor: pointer;
+      padding: 0;
+      border-radius: 50%;
+      opacity: 0.7;
+      transition: opacity 0.12s ease, background 0.12s ease;
+    }
+    .approver-select__chip-remove:hover {
+      opacity: 1;
+      background: var(--color-primary-muted);
+    }
+    .approver-select__search {
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 14px;
+      color: var(--color-ink);
+      min-width: 120px;
+      flex: 1;
+      padding: 2px 0;
+      font-family: var(--font-family);
+    }
+    .approver-select__search::placeholder {
+      color: var(--color-placeholder);
+    }
+    .approver-select__chevron {
+      color: var(--color-muted-text);
+      flex-shrink: 0;
+      margin-left: auto;
+      transition: transform 0.16s ease;
+    }
+    .approver-select[aria-expanded="true"] .approver-select__chevron {
+      transform: rotate(180deg);
+    }
+    .approver-select__dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-input-border);
+      border-radius: var(--radius-input);
+      box-shadow: var(--shadow-dropdown);
+      z-index: 100;
+      overflow: hidden;
+    }
+    .approver-select__list {
+      list-style: none;
+      margin: 0;
+      padding: 4px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    .approver-select__option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--color-ink);
+      cursor: pointer;
+      transition: background 0.12s ease;
+      user-select: none;
+    }
+    .approver-select__option:hover {
+      background: var(--color-body-bg);
+    }
+    .approver-select__option.is-selected {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+    .approver-select__option.is-hidden {
+      display: none;
+    }
+    .approver-select__avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: var(--radius-pill);
+      background: var(--color-primary-muted);
+      color: var(--color-deep-purple);
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .approver-select__option.is-selected .approver-select__avatar {
+      background: var(--color-primary-border);
+    }
+    .approver-select__check {
+      margin-left: auto;
+      color: var(--color-primary);
+      opacity: 0;
+      flex-shrink: 0;
+    }
+    .approver-select__option.is-selected .approver-select__check {
+      opacity: 1;
+    }
+    .approver-select__empty {
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--color-muted-text);
+      text-align: center;
+    }
+
+    /* ── Toast ───────────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 10px 16px;
+      background: var(--color-ink);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: var(--radius-button);
+      box-shadow: var(--shadow-modal);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      white-space: nowrap;
+      z-index: 999;
+    }
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .toast__icon {
+      color: #6ee7b7;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
+
+<div class="toast" id="save-toast" role="status" aria-live="polite">
+  <svg class="toast__icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M4.5 7l2 2 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  Changes saved
+</div>
 
 <div class="bo-shell">
 
@@ -405,11 +615,32 @@
                     <p class="ewa-field__help">If on, every request must be approved by a DoPay admin before funds are released.</p>
                   </div>
                   <div class="v6-toggle-row">
-                    <label class="ewa-toggle is-on" aria-label="Require pre-approval">
-                      <input class="ewa-toggle__input" type="checkbox" data-v6-ctrl="preapproval" checked>
+                    <label class="ewa-toggle" aria-label="Require pre-approval">
+                      <input class="ewa-toggle__input" type="checkbox" data-v6-ctrl="preapproval">
                       <span class="ewa-toggle__track"></span>
                     </label>
-                    <span class="v6-toggle-row__text" data-v6-state="preapproval">Required</span>
+                    <span class="v6-toggle-row__text" data-v6-state="preapproval">Not required</span>
+                  </div>
+                </div>
+
+                <!-- Approvers multi-select — visible only when pre-approval is on -->
+                <div class="ewa-field approvers-field" id="approvers-field">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Approvers</p>
+                    <p class="ewa-field__help">Select which company admins can approve EWA requests.</p>
+                  </div>
+                  <div class="approver-select" id="approver-select" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+                    <div class="approver-select__control" id="approver-control" tabindex="0">
+                      <div class="approver-select__chips" id="approver-chips">
+                        <input class="approver-select__search" id="approver-search" type="text" placeholder="Search admins…" autocomplete="off" aria-label="Search admins">
+                      </div>
+                      <svg class="approver-select__chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                        <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <div class="approver-select__dropdown" id="approver-dropdown" role="listbox" aria-multiselectable="true" hidden>
+                      <ul class="approver-select__list" id="approver-list"></ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -509,30 +740,22 @@
                     <p class="ewa-field__label">Maximum cap</p>
                     <p class="ewa-field__help">The highest amount an employee can request in a single cycle.</p>
                   </div>
-                  <div data-v6-override="maxCap" data-default-value="50" data-default-display="50% of net salary">
+                  <div data-v6-override="maxCap" data-default-value="2500" data-default-display="2,500.00 EGP">
                     <div class="override-default" data-override-default>
                       <div>
                         <span class="override-default__label" data-override-label>Global default</span>
-                        <span class="override-default__value" data-override-value>50% of net salary</span>
+                        <span class="override-default__value" data-override-value>2,500.00 EGP</span>
                       </div>
                       <button class="btn-text" type="button" data-override-trigger>Override</button>
                     </div>
                     <div class="override-editor" data-override-editor hidden>
                       <div class="override-editor__head">
-                        <span>Company override &middot; <span class="override-editor__global" data-override-global>global: 50% of net salary</span></span>
+                        <span>Company override &middot; <span class="override-editor__global" data-override-global>global: 2,500.00 EGP</span></span>
                         <button class="btn-text" type="button" data-override-reset>Reset to default</button>
                       </div>
-                      <div class="v6-rate-pair">
-                        <div class="ewa-select-wrap">
-                          <select class="ewa-select" data-v6-cap-mode>
-                            <option value="percent">Percentage</option>
-                            <option value="fixed">Fixed amount</option>
-                          </select>
-                        </div>
-                        <div class="ewa-suffix-wrap">
-                          <input class="ewa-input" type="number" step="1" min="0" max="100" value="50" data-v6-field="maxCap">
-                          <span class="ewa-input-suffix" data-v6-cap-suffix>%</span>
-                        </div>
+                      <div class="ewa-suffix-wrap">
+                        <input class="ewa-input" type="number" step="100" min="0" value="2500" data-v6-field="maxCap">
+                        <span class="ewa-input-suffix">EGP</span>
                       </div>
                     </div>
                   </div>
@@ -584,7 +807,7 @@
                         <span class="override-default__label" data-override-label>Global default</span>
                         <span class="override-default__value" data-override-value>1st of the month</span>
                       </div>
-                      <button class="btn-text" type="button" data-override-trigger>Override</button>
+                      <button class="btn-text" type="button" data-override-trigger hidden>Override</button>
                     </div>
                     <div class="override-editor" data-override-editor hidden>
                       <div class="override-editor__head">
@@ -604,11 +827,11 @@
                     <p class="ewa-field__label">Last day to accept requests</p>
                     <p class="ewa-field__help">Cutoff after which no new EWA requests are accepted in the current cycle.</p>
                   </div>
-                  <div data-v6-override="lastDay" data-default-value="25" data-default-display="25th of the month">
+                  <div data-v6-override="lastDay" data-default-value="28" data-default-display="28th of the month" data-max-day="28">
                     <div class="override-default" data-override-default>
                       <div>
                         <span class="override-default__label" data-override-label>Global default</span>
-                        <span class="override-default__value" data-override-value>25th of the month</span>
+                        <span class="override-default__value" data-override-value>28th of the month</span>
                       </div>
                       <button class="btn-text" type="button" data-override-trigger>Override</button>
                     </div>
@@ -995,8 +1218,9 @@
       String(d.getDate()).padStart(2, '0');
   }
 
-  function populateDaySelect(sel, defaultVal) {
-    sel.innerHTML = Array.from({ length: 31 }, function (_, i) {
+  function populateDaySelect(sel, defaultVal, maxDay) {
+    var limit = maxDay ? parseInt(maxDay, 10) : 31;
+    sel.innerHTML = Array.from({ length: limit }, function (_, i) {
       var d = i + 1;
       return '<option value="' + d + '">' + dayLabel(d) + '</option>';
     }).join('');
@@ -1059,9 +1283,160 @@
   var feeEnabledState  = qs('[data-v6-state="feeEnabled"]');
   var feeDeps = qsa('[data-v6-fee-dep]');
 
+  /* ── Approvers multi-select ──────────────────────────── */
+
+  var ADMINS = [
+    { id: 1, name: 'Sara Hassan',    email: 'sara.hassan@acme.com' },
+    { id: 2, name: 'Mohamed Tarek',  email: 'm.tarek@acme.com' },
+    { id: 3, name: 'Nour El-Din',    email: 'nour.eldin@acme.com' },
+    { id: 4, name: 'Ahmed Saleh',    email: 'ahmed.saleh@acme.com' },
+    { id: 5, name: 'Rana Mostafa',   email: 'rana.m@acme.com' },
+  ];
+
+  var selectedApprovers = [];
+  var approversField  = document.getElementById('approvers-field');
+  var approverSelect  = document.getElementById('approver-select');
+  var approverControl = document.getElementById('approver-control');
+  var approverSearch  = document.getElementById('approver-search');
+  var approverDropdown = document.getElementById('approver-dropdown');
+  var approverList    = document.getElementById('approver-list');
+
+  function initials(name) {
+    return name.split(' ').slice(0, 2).map(function(w) { return w[0]; }).join('').toUpperCase();
+  }
+
+  function renderOptions(filter) {
+    var q = (filter || '').toLowerCase();
+    var hasVisible = false;
+    approverList.querySelectorAll('.approver-select__option').forEach(function(opt) {
+      var name = opt.dataset.name.toLowerCase();
+      var show = name.indexOf(q) !== -1;
+      opt.classList.toggle('is-hidden', !show);
+      if (show) hasVisible = true;
+    });
+    var empty = approverList.querySelector('.approver-select__empty');
+    if (empty) empty.style.display = hasVisible ? 'none' : 'block';
+  }
+
+  function buildList() {
+    approverList.innerHTML = '';
+    ADMINS.forEach(function(admin) {
+      var li = document.createElement('li');
+      li.className = 'approver-select__option';
+      li.dataset.id   = admin.id;
+      li.dataset.name = admin.name;
+      li.setAttribute('role', 'option');
+      li.innerHTML =
+        '<div class="approver-select__avatar">' + initials(admin.name) + '</div>' +
+        '<div style="flex:1;min-width:0">' +
+          '<div style="font-weight:500">' + admin.name + '</div>' +
+          '<div style="font-size:12px;color:var(--color-muted-text)">' + admin.email + '</div>' +
+        '</div>' +
+        '<svg class="approver-select__check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">' +
+          '<path d="M2.5 7l3.5 3.5 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '</svg>';
+      li.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        toggleApprover(admin);
+      });
+      approverList.appendChild(li);
+    });
+    var emptyEl = document.createElement('div');
+    emptyEl.className = 'approver-select__empty';
+    emptyEl.textContent = 'No admins found';
+    emptyEl.style.display = 'none';
+    approverList.appendChild(emptyEl);
+  }
+
+  function syncApproverUI() {
+    // Chips
+    var approverChips = approverSelect.querySelectorAll('.approver-select__chip');
+    approverChips.forEach(function(c) { c.remove(); });
+    selectedApprovers.forEach(function(admin) {
+      var chip = document.createElement('span');
+      chip.className = 'approver-select__chip';
+      chip.dataset.id = admin.id;
+      chip.innerHTML =
+        admin.name +
+        '<button class="approver-select__chip-remove" type="button" aria-label="Remove ' + admin.name + '">' +
+          '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">' +
+            '<path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
+          '</svg>' +
+        '</button>';
+      chip.querySelector('button').addEventListener('click', function(e) {
+        e.stopPropagation();
+        removeApprover(admin.id);
+      });
+      var chipsContainer = document.getElementById('approver-chips');
+      chipsContainer.insertBefore(chip, approverSearch);
+    });
+    // Option states
+    approverList.querySelectorAll('.approver-select__option').forEach(function(opt) {
+      var sel = selectedApprovers.some(function(a) { return a.id == opt.dataset.id; });
+      opt.classList.toggle('is-selected', sel);
+      opt.setAttribute('aria-selected', sel);
+    });
+    // Placeholder
+    approverSearch.placeholder = selectedApprovers.length ? '' : 'Search admins…';
+  }
+
+  function toggleApprover(admin) {
+    var idx = selectedApprovers.findIndex(function(a) { return a.id === admin.id; });
+    if (idx === -1) { selectedApprovers.push(admin); } else { selectedApprovers.splice(idx, 1); }
+    if (selectedApprovers.length > 0) approverSelect.classList.remove('is-error');
+    syncApproverUI();
+    approverSearch.value = '';
+    renderOptions('');
+    approverSearch.focus();
+    syncDirty();
+  }
+
+  function removeApprover(id) {
+    selectedApprovers = selectedApprovers.filter(function(a) { return a.id !== id; });
+    syncApproverUI();
+    syncDirty();
+  }
+
+  function openDropdown() {
+    approverDropdown.hidden = false;
+    approverSelect.setAttribute('aria-expanded', 'true');
+    renderOptions(approverSearch.value);
+  }
+
+  function closeDropdown() {
+    approverDropdown.hidden = true;
+    approverSelect.setAttribute('aria-expanded', 'false');
+    approverSearch.value = '';
+    renderOptions('');
+  }
+
+  approverControl.addEventListener('click', function() {
+    if (approverDropdown.hidden) { openDropdown(); approverSearch.focus(); }
+    else { closeDropdown(); }
+  });
+
+  approverSearch.addEventListener('input', function() {
+    if (approverDropdown.hidden) openDropdown();
+    renderOptions(this.value);
+  });
+
+  approverSearch.addEventListener('focus', function() {
+    if (approverDropdown.hidden) openDropdown();
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!approverSelect.contains(e.target)) closeDropdown();
+  });
+
+  buildList();
+  syncApproverUI();
+
   function syncPreapproval() {
     syncToggleWrapper(preapprovalCb);
-    preapprovalState.textContent = isOn(preapprovalCb) ? 'Required' : 'Not required';
+    var on = isOn(preapprovalCb);
+    preapprovalState.textContent = on ? 'Required' : 'Not required';
+    approversField.classList.toggle('is-visible', on);
+    if (!on) closeDropdown();
     syncDirty();
   }
 
@@ -1153,7 +1528,7 @@
 
     // Populate day selects
     if ((key === 'payrollStart' || key === 'lastDay') && field && field.tagName === 'SELECT') {
-      populateDaySelect(field, wrap.dataset.defaultValue);
+      populateDaySelect(field, wrap.dataset.defaultValue, wrap.dataset.maxDay);
     }
 
     // Update global label in editor
@@ -1271,6 +1646,13 @@
   /* ── Save ─────────────────────────────────────────────── */
 
   qs('[data-v6-save]').addEventListener('click', function () {
+    // Validate: approvers required when pre-approval is on
+    if (isOn(preapprovalCb) && selectedApprovers.length === 0) {
+      approverSelect.classList.add('is-error');
+      approverControl.focus();
+      return;
+    }
+    approverSelect.classList.remove('is-error');
     // Mark overrides as applied if value differs from default
     overrides.forEach(function (wrap) {
       var key   = wrap.dataset.v6Override;
@@ -1284,7 +1666,20 @@
       syncOverrideDefaultCard(wrap);
     });
     commitState();
+    showToast();
   });
+
+  /* ── Toast ─────────────────────────────────────────────── */
+
+  var toastEl = document.getElementById('save-toast');
+  var toastTimer;
+  function showToast() {
+    clearTimeout(toastTimer);
+    toastEl.classList.add('is-visible');
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove('is-visible');
+    }, 2800);
+  }
 
   /* ── Discard ──────────────────────────────────────────── */
 
