@@ -846,6 +846,32 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Outstanding check date -->
+                <div class="ewa-field">
+                  <div class="ewa-field__label-group">
+                    <p class="ewa-field__label">Outstanding check date</p>
+                    <p class="ewa-field__help">Day of the month when outstanding EWA balances are checked and reconciled.</p>
+                  </div>
+                  <div data-v6-override="checkDate" data-default-value="7" data-default-display="7th of the month">
+                    <div class="override-default" data-override-default>
+                      <div>
+                        <span class="override-default__label" data-override-label>Global default</span>
+                        <span class="override-default__value" data-override-value>7th of the month</span>
+                      </div>
+                      <button class="btn-text" type="button" data-override-trigger>Override</button>
+                    </div>
+                    <div class="override-editor" data-override-editor hidden>
+                      <div class="override-editor__head">
+                        <span>Company override &middot; <span class="override-editor__global" data-override-global>global: 7th of the month</span></span>
+                        <button class="btn-text" type="button" data-override-reset>Reset to default</button>
+                      </div>
+                      <div class="ewa-select-wrap">
+                        <select class="ewa-select" data-v6-field="checkDate"></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div><!-- /ewa-card -->
@@ -1477,7 +1503,7 @@
       return capMode && capMode.value === 'fixed' ? formatEGP(val) : val + '%';
     }
     if (key === 'minRequest')   return formatEGP(val);
-    if (key === 'payrollStart' || key === 'lastDay') return dayLabel(val);
+    if (key === 'payrollStart' || key === 'lastDay' || key === 'checkDate') return dayLabel(val);
     return val;
   }
 
@@ -1527,7 +1553,7 @@
     var globalEl = qs('[data-override-global]', wrap);
 
     // Populate day selects
-    if ((key === 'payrollStart' || key === 'lastDay') && field && field.tagName === 'SELECT') {
+    if ((key === 'payrollStart' || key === 'lastDay' || key === 'checkDate') && field && field.tagName === 'SELECT') {
       populateDaySelect(field, wrap.dataset.defaultValue, wrap.dataset.maxDay);
     }
 
@@ -1616,6 +1642,7 @@
       minRequest:   qs('[data-v6-field="minRequest"]').value,
       payrollStart: qs('[data-v6-field="payrollStart"]').value,
       lastDay:      qs('[data-v6-field="lastDay"]').value,
+      checkDate:    qs('[data-v6-field="checkDate"]').value,
     };
     overrides.forEach(function (wrap) {
       state['applied_' + wrap.dataset.v6Override] = wrap.dataset.applied;
@@ -1697,6 +1724,7 @@
     qs('[data-v6-field="minRequest"]').value   = committedState.minRequest;
     qs('[data-v6-field="payrollStart"]').value = committedState.payrollStart;
     qs('[data-v6-field="lastDay"]').value      = committedState.lastDay;
+    qs('[data-v6-field="checkDate"]').value    = committedState.checkDate;
     if (rateModeSelect) rateModeSelect.value = committedState.rateMode;
     if (capModeSelect)  capModeSelect.value  = committedState.capMode;
     // Restore override applied states and close editors
